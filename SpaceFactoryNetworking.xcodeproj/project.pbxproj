@@ -1,0 +1,456 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		BE632CE71A322C3E00CE9121 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BE632CE61A322C3E00CE9121 /* main.m */; };
+		BE632CEA1A322C3E00CE9121 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BE632CE91A322C3E00CE9121 /* AppDelegate.m */; };
+		BE632CED1A322C3E00CE9121 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE632CEC1A322C3E00CE9121 /* ViewController.m */; };
+		BE632CF01A322C3E00CE9121 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BE632CEE1A322C3E00CE9121 /* Main.storyboard */; };
+		BE632CF21A322C3E00CE9121 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BE632CF11A322C3E00CE9121 /* Images.xcassets */; };
+		BE632CF51A322C3E00CE9121 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = BE632CF31A322C3E00CE9121 /* LaunchScreen.xib */; };
+		BE632D011A322C3F00CE9121 /* SpaceFactoryNetworkingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BE632D001A322C3F00CE9121 /* SpaceFactoryNetworkingTests.m */; };
+		BE632D0D1A322C6B00CE9121 /* SFSFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BE632D0C1A322C6B00CE9121 /* SFSFileManager.m */; };
+		BE632D101A3248F100CE9121 /* SFSFileDescriptor.m in Sources */ = {isa = PBXBuildFile; fileRef = BE632D0F1A3248F100CE9121 /* SFSFileDescriptor.m */; };
+		BE632D131A325A1400CE9121 /* SFSTaskMetadata.m in Sources */ = {isa = PBXBuildFile; fileRef = BE632D121A325A1400CE9121 /* SFSTaskMetadata.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		BE632CFB1A322C3F00CE9121 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BE632CD91A322C3E00CE9121 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BE632CE01A322C3E00CE9121;
+			remoteInfo = SpaceFactoryNetworking;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		BE632CE11A322C3E00CE9121 /* SpaceFactoryNetworking.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpaceFactoryNetworking.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BE632CE51A322C3E00CE9121 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BE632CE61A322C3E00CE9121 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		BE632CE81A322C3E00CE9121 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		BE632CE91A322C3E00CE9121 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		BE632CEB1A322C3E00CE9121 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		BE632CEC1A322C3E00CE9121 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		BE632CEF1A322C3E00CE9121 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		BE632CF11A322C3E00CE9121 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		BE632CF41A322C3E00CE9121 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		BE632CFA1A322C3F00CE9121 /* SpaceFactoryNetworkingTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SpaceFactoryNetworkingTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		BE632CFF1A322C3F00CE9121 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BE632D001A322C3F00CE9121 /* SpaceFactoryNetworkingTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SpaceFactoryNetworkingTests.m; sourceTree = "<group>"; };
+		BE632D0B1A322C6B00CE9121 /* SFSFileManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFSFileManager.h; sourceTree = "<group>"; };
+		BE632D0C1A322C6B00CE9121 /* SFSFileManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFSFileManager.m; sourceTree = "<group>"; };
+		BE632D0E1A3248F100CE9121 /* SFSFileDescriptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFSFileDescriptor.h; sourceTree = "<group>"; };
+		BE632D0F1A3248F100CE9121 /* SFSFileDescriptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFSFileDescriptor.m; sourceTree = "<group>"; };
+		BE632D111A325A1400CE9121 /* SFSTaskMetadata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFSTaskMetadata.h; sourceTree = "<group>"; };
+		BE632D121A325A1400CE9121 /* SFSTaskMetadata.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFSTaskMetadata.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		BE632CDE1A322C3E00CE9121 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BE632CF71A322C3F00CE9121 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		BE632CD81A322C3E00CE9121 = {
+			isa = PBXGroup;
+			children = (
+				BE632CE31A322C3E00CE9121 /* SpaceFactoryNetworking */,
+				BE632CFD1A322C3F00CE9121 /* SpaceFactoryNetworkingTests */,
+				BE632CE21A322C3E00CE9121 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		BE632CE21A322C3E00CE9121 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BE632CE11A322C3E00CE9121 /* SpaceFactoryNetworking.app */,
+				BE632CFA1A322C3F00CE9121 /* SpaceFactoryNetworkingTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		BE632CE31A322C3E00CE9121 /* SpaceFactoryNetworking */ = {
+			isa = PBXGroup;
+			children = (
+				BE632D0A1A322C4C00CE9121 /* Networking */,
+				BE632CE81A322C3E00CE9121 /* AppDelegate.h */,
+				BE632CE91A322C3E00CE9121 /* AppDelegate.m */,
+				BE632CEB1A322C3E00CE9121 /* ViewController.h */,
+				BE632CEC1A322C3E00CE9121 /* ViewController.m */,
+				BE632CEE1A322C3E00CE9121 /* Main.storyboard */,
+				BE632CF11A322C3E00CE9121 /* Images.xcassets */,
+				BE632CF31A322C3E00CE9121 /* LaunchScreen.xib */,
+				BE632CE41A322C3E00CE9121 /* Supporting Files */,
+			);
+			path = SpaceFactoryNetworking;
+			sourceTree = "<group>";
+		};
+		BE632CE41A322C3E00CE9121 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				BE632CE51A322C3E00CE9121 /* Info.plist */,
+				BE632CE61A322C3E00CE9121 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		BE632CFD1A322C3F00CE9121 /* SpaceFactoryNetworkingTests */ = {
+			isa = PBXGroup;
+			children = (
+				BE632D001A322C3F00CE9121 /* SpaceFactoryNetworkingTests.m */,
+				BE632CFE1A322C3F00CE9121 /* Supporting Files */,
+			);
+			path = SpaceFactoryNetworkingTests;
+			sourceTree = "<group>";
+		};
+		BE632CFE1A322C3F00CE9121 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				BE632CFF1A322C3F00CE9121 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		BE632D0A1A322C4C00CE9121 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				BE632D0B1A322C6B00CE9121 /* SFSFileManager.h */,
+				BE632D0C1A322C6B00CE9121 /* SFSFileManager.m */,
+				BE632D0E1A3248F100CE9121 /* SFSFileDescriptor.h */,
+				BE632D0F1A3248F100CE9121 /* SFSFileDescriptor.m */,
+				BE632D111A325A1400CE9121 /* SFSTaskMetadata.h */,
+				BE632D121A325A1400CE9121 /* SFSTaskMetadata.m */,
+			);
+			name = Networking;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		BE632CE01A322C3E00CE9121 /* SpaceFactoryNetworking */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BE632D041A322C3F00CE9121 /* Build configuration list for PBXNativeTarget "SpaceFactoryNetworking" */;
+			buildPhases = (
+				BE632CDD1A322C3E00CE9121 /* Sources */,
+				BE632CDE1A322C3E00CE9121 /* Frameworks */,
+				BE632CDF1A322C3E00CE9121 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SpaceFactoryNetworking;
+			productName = SpaceFactoryNetworking;
+			productReference = BE632CE11A322C3E00CE9121 /* SpaceFactoryNetworking.app */;
+			productType = "com.apple.product-type.application";
+		};
+		BE632CF91A322C3F00CE9121 /* SpaceFactoryNetworkingTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BE632D071A322C3F00CE9121 /* Build configuration list for PBXNativeTarget "SpaceFactoryNetworkingTests" */;
+			buildPhases = (
+				BE632CF61A322C3F00CE9121 /* Sources */,
+				BE632CF71A322C3F00CE9121 /* Frameworks */,
+				BE632CF81A322C3F00CE9121 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				BE632CFC1A322C3F00CE9121 /* PBXTargetDependency */,
+			);
+			name = SpaceFactoryNetworkingTests;
+			productName = SpaceFactoryNetworkingTests;
+			productReference = BE632CFA1A322C3F00CE9121 /* SpaceFactoryNetworkingTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		BE632CD91A322C3E00CE9121 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = SFS;
+				LastUpgradeCheck = 0610;
+				ORGANIZATIONNAME = "Space Factory Studios";
+				TargetAttributes = {
+					BE632CE01A322C3E00CE9121 = {
+						CreatedOnToolsVersion = 6.1;
+					};
+					BE632CF91A322C3F00CE9121 = {
+						CreatedOnToolsVersion = 6.1;
+						TestTargetID = BE632CE01A322C3E00CE9121;
+					};
+				};
+			};
+			buildConfigurationList = BE632CDC1A322C3E00CE9121 /* Build configuration list for PBXProject "SpaceFactoryNetworking" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = BE632CD81A322C3E00CE9121;
+			productRefGroup = BE632CE21A322C3E00CE9121 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				BE632CE01A322C3E00CE9121 /* SpaceFactoryNetworking */,
+				BE632CF91A322C3F00CE9121 /* SpaceFactoryNetworkingTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		BE632CDF1A322C3E00CE9121 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BE632CF01A322C3E00CE9121 /* Main.storyboard in Resources */,
+				BE632CF51A322C3E00CE9121 /* LaunchScreen.xib in Resources */,
+				BE632CF21A322C3E00CE9121 /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BE632CF81A322C3F00CE9121 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		BE632CDD1A322C3E00CE9121 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BE632CED1A322C3E00CE9121 /* ViewController.m in Sources */,
+				BE632D101A3248F100CE9121 /* SFSFileDescriptor.m in Sources */,
+				BE632CEA1A322C3E00CE9121 /* AppDelegate.m in Sources */,
+				BE632D0D1A322C6B00CE9121 /* SFSFileManager.m in Sources */,
+				BE632D131A325A1400CE9121 /* SFSTaskMetadata.m in Sources */,
+				BE632CE71A322C3E00CE9121 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BE632CF61A322C3F00CE9121 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BE632D011A322C3F00CE9121 /* SpaceFactoryNetworkingTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		BE632CFC1A322C3F00CE9121 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BE632CE01A322C3E00CE9121 /* SpaceFactoryNetworking */;
+			targetProxy = BE632CFB1A322C3F00CE9121 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		BE632CEE1A322C3E00CE9121 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				BE632CEF1A322C3E00CE9121 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		BE632CF31A322C3E00CE9121 /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				BE632CF41A322C3E00CE9121 /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		BE632D021A322C3F00CE9121 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		BE632D031A322C3F00CE9121 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		BE632D051A322C3F00CE9121 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = SpaceFactoryNetworking/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		BE632D061A322C3F00CE9121 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = SpaceFactoryNetworking/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		BE632D081A322C3F00CE9121 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = SpaceFactoryNetworkingTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SpaceFactoryNetworking.app/SpaceFactoryNetworking";
+			};
+			name = Debug;
+		};
+		BE632D091A322C3F00CE9121 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = SpaceFactoryNetworkingTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SpaceFactoryNetworking.app/SpaceFactoryNetworking";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		BE632CDC1A322C3E00CE9121 /* Build configuration list for PBXProject "SpaceFactoryNetworking" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BE632D021A322C3F00CE9121 /* Debug */,
+				BE632D031A322C3F00CE9121 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BE632D041A322C3F00CE9121 /* Build configuration list for PBXNativeTarget "SpaceFactoryNetworking" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BE632D051A322C3F00CE9121 /* Debug */,
+				BE632D061A322C3F00CE9121 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		BE632D071A322C3F00CE9121 /* Build configuration list for PBXNativeTarget "SpaceFactoryNetworkingTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BE632D081A322C3F00CE9121 /* Debug */,
+				BE632D091A322C3F00CE9121 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = BE632CD91A322C3E00CE9121 /* Project object */;
+}
