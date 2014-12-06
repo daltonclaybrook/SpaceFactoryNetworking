@@ -9,9 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "SFSFileManager.h"
 #import "SFSFileDescriptor.h"
-#import "SFSTaskMetadata.h"
 
-NSString * const SFSFileManagerDefaultFileGroup = @"SFSFileManagerDefaultFileGroup";
 static NSString * const SFSFileManagerRootDirectory = @"SFSFileManagerRootDirectory";
 
 static NSString * const kBackgroundSessionIdentifier = @"kBackgroundSessionIdentifier";
@@ -93,7 +91,7 @@ static NSString * const kTaskMetadataFileName = @"taskMetadata";
         return nil;
     }
     
-    SFSTask *returnTask = nil;
+    id<SFSTask> returnTask = nil;
     NSURL *existingFile = [self urlForIdentifier:identifier group:group fileDescriptor:nil];
     if (existingFile)
     {
@@ -106,14 +104,11 @@ static NSString * const kTaskMetadataFileName = @"taskMetadata";
     {
         NSURLSessionDownloadTask *task = [self.urlSession downloadTaskWithRequest:request];
         
-        SFSTaskMetadata *metadata = [SFSTaskMetadata metadataForTaskIdentifier:task.taskIdentifier fileIdentifier:identifier fileGroup:group encrypted:encrypt completion:block];
+        SFSTaskMetadata *metadata = [SFSTaskMetadata metadataForTaskIdentifier:task.taskIdentifier task:task fileIdentifier:identifier fileGroup:group encrypted:encrypt completion:block];
         [self.taskMetadata addObject:metadata];
         [self saveTaskMetadata];
         
-        returnTask = [[SFSTask alloc] init];
-        returnTask.task = task;
-        returnTask.metadata = metadata;
-        
+        returnTask = metadata;
         [task resume];
     }
     return returnTask;

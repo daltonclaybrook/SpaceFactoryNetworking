@@ -7,12 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "SFSTask.h"
-
-NSInteger const SFSFileManagerNoDiskSizeLimit = -1;
-extern NSString * const SFSFileManagerDefaultFileGroup;
-
-typedef void(^SFSFileManagerCompletion)(NSURL *fileURL, NSError *error);
+#import "SFSTaskMetadata.h"
 
 @interface SFSFileManager : NSObject
 

@@ -17,10 +17,11 @@ static NSString * const kEncryptedKey = @"kEncryptedKey";
 
 #pragma mark - Initializers
 
-+ (instancetype)metadataForTaskIdentifier:(NSUInteger)identifier fileIdentifier:(NSString *)fileIdentifier fileGroup:(NSString *)fileGroup encrypted:(BOOL)encrypted completion:(SFSFileManagerCompletion)block
++ (instancetype)metadataForTaskIdentifier:(NSUInteger)identifier task:(NSURLSessionTask *)task fileIdentifier:(NSString *)fileIdentifier fileGroup:(NSString *)fileGroup encrypted:(BOOL)encrypted completion:(SFSFileManagerCompletion)block
 {
     SFSTaskMetadata *metadata = [[self alloc] init];
     metadata.taskIdentifier = identifier;
+    metadata.task = task;
     metadata.fileIdentifier = fileIdentifier;
     metadata.fileGroup = fileGroup;
     metadata.encrypted = encrypted;
@@ -49,6 +50,19 @@ static NSString * const kEncryptedKey = @"kEncryptedKey";
     [aCoder encodeObject:self.fileIdentifier forKey:kFileIdentifierKey];
     [aCoder encodeObject:self.fileGroup forKey:kFileGroupKey];
     [aCoder encodeBool:self.encrypted forKey:kEncryptedKey];
+}
+
+#pragma mark - SFSTask
+
+- (void)cancelRequest
+{
+    [self.task cancel];
+    self.task = nil;
+}
+
+- (void)ignoreResults
+{
+    self.completionBlock = nil;
 }
 
 @end

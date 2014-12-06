@@ -7,16 +7,25 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "SFSFileManager.h"
+#import "SFSFileManagerConstants.h"
 
-@interface SFSTaskMetadata : NSObject <NSCoding>
+@protocol SFSTask <NSObject>
+
+- (void)cancelRequest;
+- (void)ignoreResults;
+
+@end
+
+@interface SFSTaskMetadata : NSObject <NSCoding, SFSTask>
 
 @property (nonatomic, assign) NSUInteger taskIdentifier;
+@property (nonatomic, strong) NSURLSessionTask *task;
+
 @property (nonatomic, copy) NSString *fileIdentifier;
 @property (nonatomic, copy) NSString *fileGroup;
 @property (nonatomic, assign) BOOL encrypted;
 @property (nonatomic, copy) SFSFileManagerCompletion completionBlock;
 
-+ (instancetype)metadataForTaskIdentifier:(NSUInteger)identifier fileIdentifier:(NSString *)fileIdentifier fileGroup:(NSString *)fileGroup encrypted:(BOOL)encrypted completion:(SFSFileManagerCompletion)block;
++ (instancetype)metadataForTaskIdentifier:(NSUInteger)identifier task:(NSURLSessionTask *)task fileIdentifier:(NSString *)fileIdentifier fileGroup:(NSString *)fileGroup encrypted:(BOOL)encrypted completion:(SFSFileManagerCompletion)block;
 
 @end
