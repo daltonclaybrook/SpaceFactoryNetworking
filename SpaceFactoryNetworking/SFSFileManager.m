@@ -13,6 +13,7 @@
 
 NSString * const SFSFileManagerDefaultFileGroup = @"SFSFileManagerDefaultFileGroup";
 static NSString * const SFSFileManagerUnprotectedFileGroup = @"SFSFileManagerUnprotectedFileGroup";
+static NSString * const SFSFileManagerRootDirectory = @"SFSFileManagerRootDirectory";
 
 static NSString * const kBackgroundSessionIdentifier = @"kBackgroundSessionIdentifier";
 static NSString * const kManifestFileName = @"manifest";
@@ -53,6 +54,8 @@ static NSString * const kTaskMetadataFileName = @"taskMetadata";
     
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:kBackgroundSessionIdentifier];
     _urlSession = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
+    
+    [self cleanupTaskMetadata];
 }
 
 - (void)dealloc
@@ -91,7 +94,7 @@ static NSString * const kTaskMetadataFileName = @"taskMetadata";
         return;
     }
     
-    NSURL *existingFile = [self urlForIdentifier:identifier group:group];
+    NSURL *existingFile = [self urlForIdentifier:identifier group:group fileDescriptor:nil];
     if (existingFile)
     {
         if (block)
@@ -125,29 +128,47 @@ static NSString * const kTaskMetadataFileName = @"taskMetadata";
         NSAssert(NO, @"One or more parameters are invalid: %@", NSStringFromSelector(_cmd));
         return nil;
     }
-    return [self urlForIdentifier:identifier group:fileGroup];
+    return [self urlForIdentifier:identifier group:fileGroup fileDescriptor:nil];
 }
 
 #pragma mark - Eviction
 
 - (void)evictFileForIdentifier:(NSString *)identifier
 {
-    
+    [self evictFileForIdentifier:identifier inGroup:SFSFileManagerDefaultFileGroup];
 }
 
 - (void)evictFileForIdentifier:(NSString *)identifier inGroup:(NSString *)fileGroup
 {
+    SFSFileDescriptor *descriptor = nil;
+    NSURL *url = [self urlForIdentifier:identifier group:fileGroup fileDescriptor:&descriptor];
+    [[NSFileManager defaultManager] removeItemAtURL:url error:nil];
     
+    [self.fileManifest removeObject:descriptor];
+    [self saveManifest];
 }
 
 - (void)evictAllFilesInGroup:(NSString *)fileGroup
 {
+    NSString *path = [NSString pathWithComponents:@[[self rootDirectory], fileGroup]];
+    [[NSFileManager defaultManager] removeItemAtPath:path error:nil];
     
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"fileGroup == %@", fileGroup];
+    NSArray *filteredArray = [self.fileManifest filteredArrayUsingPredicate:predicate];
+    
+    if (filteredArray.count)
+    {
+        [self.fileManifest removeObjectsInArray:filteredArray];
+        [self saveManifest];
+    }
 }
 
 - (void)evictAllFiles
 {
+    [[NSFileManager defaultManager] removeItemAtPath:[self rootDirectory] error:nil];
     
+    [self.fileManifest removeAllObjects];
+    [self saveManifest];
 }
 
 #pragma mark - Private
@@ -167,6 +188,32 @@ static NSString * const kTaskMetadataFileName = @"taskMetadata";
     }
 }
 
+- (void)cleanupTaskMetadata
+{
+    __typeof__(self) __weak weakSelf = self;
+    [self.urlSession getTasksWithCompletionHandler:^(NSArray *dataTasks, NSArray *uploadTasks, NSArray *downloadTasks) {
+        
+        NSMutableArray *metadataToRemove = [NSMutableArray array];
+        for (SFSTaskMetadata *metadata in weakSelf.taskMetadata)
+        {
+            NSUInteger index = [downloadTasks indexOfObjectPassingTest:^BOOL(NSURLSessionTask *task, NSUInteger idx, BOOL *stop) {
+                return (task.taskIdentifier == metadata.taskIdentifier);
+            }];
+            
+            if (index == NSNotFound)
+            {
+                [metadataToRemove addObject:metadata];
+            }
+        }
+        
+        if (metadataToRemove.count)
+        {
+            [weakSelf.taskMetadata removeObjectsInArray:metadataToRemove];
+            [weakSelf saveTaskMetadata];
+        }
+    }];
+}
+
 - (void)encryptUnprotectedFilesIfNecessary
 {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"awaitingEncryption == TRUE"];
@@ -175,11 +222,13 @@ static NSString * const kTaskMetadataFileName = @"taskMetadata";
     
     for (SFSFileDescriptor *descriptor in filteredArray)
     {
-        NSURL *existingURL = [descriptor fileURLWithBaseComponent:[self documentsDirectory] fileGroup:SFSFileManagerUnprotectedFileGroup];
-        if ([[NSFileManager defaultManager] fileExistsAtPath:[existingURL absoluteString]])
+        NSURL *existingURL = [descriptor fileURLWithBaseComponent:[self rootDirectory] fileGroup:SFSFileManagerUnprotectedFileGroup];
+        if ([[NSFileManager defaultManager] fileExistsAtPath:[existingURL path]])
         {
             NSUInteger component;
             NSURL *fileURL = [self createAvailableFileURLInFileGroup:descriptor.fileGroup withComponent:&component];
+            [self createDirectoryForGroupIfNecessary:descriptor.fileGroup];
+            [self deleteExistingFileAtURLIfNecessary:fileURL];
             
             NSError *error = nil;
             [[NSFileManager defaultManager] moveItemAtURL:existingURL toURL:fileURL error:&error];
@@ -187,14 +236,15 @@ static NSString * const kTaskMetadataFileName = @"taskMetadata";
             {
                 NSString *protectionValue = NSFileProtectionComplete;
                 NSDictionary *protectionAttributes = @{NSFileProtectionKey : protectionValue};
-                [[NSFileManager defaultManager] setAttributes:protectionAttributes ofItemAtPath:[fileURL absoluteString] error:&error];
+                [[NSFileManager defaultManager] setAttributes:protectionAttributes ofItemAtPath:[fileURL path] error:&error];
                 if (error)
                 {
+                    // move the file back
                     [[NSFileManager defaultManager] moveItemAtURL:fileURL toURL:existingURL error:nil];
                 }
                 else
                 {
-                    NSDictionary *attributes = [[NSFileManager defaultManager] attributesOfItemAtPath:[fileURL absoluteString] error:nil];
+                    NSDictionary *attributes = [[NSFileManager defaultManager] attributesOfItemAtPath:[fileURL path] error:nil];
                     
                     descriptor.awaitingEncryption = NO;
                     descriptor.fileURLComponent = component;
@@ -218,6 +268,8 @@ static NSString * const kTaskMetadataFileName = @"taskMetadata";
     
     NSUInteger component;
     NSURL *newURL = [self createAvailableFileURLInFileGroup:fileGroup withComponent:&component];
+    [self createDirectoryForGroupIfNecessary:fileGroup];
+    [self deleteExistingFileAtURLIfNecessary:newURL];
     
     NSError *error = nil;
     [[NSFileManager defaultManager] moveItemAtURL:url toURL:newURL error:&error];
@@ -226,7 +278,7 @@ static NSString * const kTaskMetadataFileName = @"taskMetadata";
     {
         NSString *protectionValue = (metadata.encrypted && !awaitingEncryption) ? NSFileProtectionComplete : NSFileProtectionNone;
         NSDictionary *protectionAttributes = @{NSFileProtectionKey : protectionValue};
-        [[NSFileManager defaultManager] setAttributes:protectionAttributes ofItemAtPath:[newURL absoluteString] error:&error];
+        [[NSFileManager defaultManager] setAttributes:protectionAttributes ofItemAtPath:[newURL path] error:&error];
         
         if (error)
         {
@@ -234,7 +286,7 @@ static NSString * const kTaskMetadataFileName = @"taskMetadata";
         }
         else
         {
-            NSDictionary *attributes = [[NSFileManager defaultManager] attributesOfItemAtPath:[newURL absoluteString] error:nil];
+            NSDictionary *attributes = [[NSFileManager defaultManager] attributesOfItemAtPath:[newURL path] error:nil];
             
             SFSFileDescriptor *descriptor = [[SFSFileDescriptor alloc] init];
             descriptor.identifier = metadata.fileIdentifier;
@@ -263,7 +315,7 @@ static NSString * const kTaskMetadataFileName = @"taskMetadata";
     }
 }
 
-- (NSURL *)urlForIdentifier:(NSString *)identifier group:(NSString *)fileGroup
+- (NSURL *)urlForIdentifier:(NSString *)identifier group:(NSString *)fileGroup fileDescriptor:(out SFSFileDescriptor *__autoreleasing*)outDescriptor
 {
     NSURL *url = nil;
     NSUInteger index = [self.fileManifest indexOfObjectPassingTest:^BOOL(SFSFileDescriptor *descriptor, NSUInteger idx, BOOL *stop) {
@@ -274,7 +326,11 @@ static NSString * const kTaskMetadataFileName = @"taskMetadata";
     if (index != NSNotFound)
     {
         SFSFileDescriptor *descriptor = self.fileManifest[index];
-        url = [descriptor fileURLWithBaseComponent:[self documentsDirectory]];
+        if (outDescriptor)
+        {
+            *outDescriptor = descriptor;
+        }
+        url = [descriptor fileURLWithBaseComponent:[self rootDirectory]];
     }
     
     return url;
@@ -294,18 +350,18 @@ static NSString * const kTaskMetadataFileName = @"taskMetadata";
 
 - (NSString *)manifestFilePath
 {
-    return [NSString pathWithComponents:@[[self documentsDirectory], kManifestFileName]];
+    return [NSString pathWithComponents:@[[self rootDirectory], kManifestFileName]];
 }
 
 - (NSString *)taskMetadataFilePath
 {
-    return [NSString pathWithComponents:@[[self documentsDirectory], kTaskMetadataFileName]];
+    return [NSString pathWithComponents:@[[self rootDirectory], kTaskMetadataFileName]];
 }
 
-- (NSString *)documentsDirectory
+- (NSString *)rootDirectory
 {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    return [paths firstObject];
+    return [NSString pathWithComponents:@[[paths firstObject], SFSFileManagerRootDirectory]];
 }
 
 - (NSUInteger)firstAvailableFileURLComponentForFileGroup:(NSString *)group
@@ -362,7 +418,7 @@ static NSString * const kTaskMetadataFileName = @"taskMetadata";
 
 - (NSURL *)createAvailableFileURLInFileGroup:(NSString *)group withComponent:(out NSUInteger *)outComponent
 {
-    NSString *documentsDirectory = [self documentsDirectory];
+    NSString *documentsDirectory = [self rootDirectory];
     NSUInteger component = [self firstAvailableFileURLComponentForFileGroup:group];
     NSString *componentString = [NSString stringWithFormat:@"%lu", (unsigned long)component];
     
@@ -371,6 +427,35 @@ static NSString * const kTaskMetadataFileName = @"taskMetadata";
         *outComponent = component;
     }
     return [NSURL fileURLWithPathComponents:@[documentsDirectory, group, componentString]];
+}
+
+- (void)createDirectoryForGroupIfNecessary:(NSString *)group
+{
+    void (^createDirectory)(NSString *path) = ^(NSString *path) {
+        [[NSFileManager defaultManager] createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:nil];
+    };
+    
+    NSString *path = [NSString pathWithComponents:@[[self rootDirectory], group]];
+    BOOL directory;
+    if ([[NSFileManager defaultManager] fileExistsAtPath:path isDirectory:&directory])
+    {
+        if (!directory)
+        {
+            createDirectory(path);
+        }
+    }
+    else
+    {
+        createDirectory(path);
+    }
+}
+
+- (void)deleteExistingFileAtURLIfNecessary:(NSURL *)url
+{
+    if ([[NSFileManager defaultManager] fileExistsAtPath:[url path]])
+    {
+        [[NSFileManager defaultManager] removeItemAtURL:url error:nil];
+    }
 }
 
 #pragma mark - NSURLSessionDownloadDelegate
