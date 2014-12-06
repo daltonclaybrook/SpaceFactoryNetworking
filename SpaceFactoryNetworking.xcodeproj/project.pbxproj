@@ -84,6 +84,41 @@
 			name = Constants;
 			sourceTree = "<group>";
 		};
+		75BF57921A32F96000C82F7D /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				75BF57961A32F98D00C82F7D /* Interface */,
+				75BF57931A32F96600C82F7D /* Controllers */,
+			);
+			name = Presentation;
+			sourceTree = "<group>";
+		};
+		75BF57931A32F96600C82F7D /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				BE632CEB1A322C3E00CE9121 /* ViewController.h */,
+				BE632CEC1A322C3E00CE9121 /* ViewController.m */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		75BF57951A32F97B00C82F7D /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				BE632CF11A322C3E00CE9121 /* Images.xcassets */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		75BF57961A32F98D00C82F7D /* Interface */ = {
+			isa = PBXGroup;
+			children = (
+				BE632CEE1A322C3E00CE9121 /* Main.storyboard */,
+				BE632CF31A322C3E00CE9121 /* LaunchScreen.xib */,
+			);
+			name = Interface;
+			sourceTree = "<group>";
+		};
 		BE632CD81A322C3E00CE9121 = {
 			isa = PBXGroup;
 			children = (
@@ -106,13 +141,8 @@
 			isa = PBXGroup;
 			children = (
 				BE632D0A1A322C4C00CE9121 /* Networking */,
-				BE632CE81A322C3E00CE9121 /* AppDelegate.h */,
-				BE632CE91A322C3E00CE9121 /* AppDelegate.m */,
-				BE632CEB1A322C3E00CE9121 /* ViewController.h */,
-				BE632CEC1A322C3E00CE9121 /* ViewController.m */,
-				BE632CEE1A322C3E00CE9121 /* Main.storyboard */,
-				BE632CF11A322C3E00CE9121 /* Images.xcassets */,
-				BE632CF31A322C3E00CE9121 /* LaunchScreen.xib */,
+				75BF57921A32F96000C82F7D /* Presentation */,
+				75BF57951A32F97B00C82F7D /* Resources */,
 				BE632CE41A322C3E00CE9121 /* Supporting Files */,
 			);
 			path = SpaceFactoryNetworking;
@@ -121,6 +151,8 @@
 		BE632CE41A322C3E00CE9121 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				BE632CE81A322C3E00CE9121 /* AppDelegate.h */,
+				BE632CE91A322C3E00CE9121 /* AppDelegate.m */,
 				BE632CE51A322C3E00CE9121 /* Info.plist */,
 				BE632CE61A322C3E00CE9121 /* main.m */,
 			);

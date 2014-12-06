@@ -105,13 +105,20 @@ static NSString * const kTaskMetadataFileName = @"taskMetadata";
     else
     {
         NSURLSessionDownloadTask *task = [self.urlSession downloadTaskWithRequest:request];
-        
         SFSTaskMetadata *metadata = [SFSTaskMetadata metadataForTaskIdentifier:task.taskIdentifier task:task fileIdentifier:identifier fileGroup:group encrypted:encrypt completion:block];
-        [self.taskMetadata addObject:metadata];
-        [self saveTaskMetadata];
-        
         returnTask = metadata;
-        [task resume];
+        
+        __typeof__(self) __weak weakSelf = self;
+        [self checkIfFetchingURLRequest:request appendingCompletion:block withCompletion:^(BOOL currentlyFetching) {
+            
+            if (!currentlyFetching)
+            {
+                [weakSelf.taskMetadata addObject:metadata];
+                [weakSelf saveTaskMetadata];
+                
+                [task resume];
+            }
+        }];
     }
     return returnTask;
 }
@@ -179,6 +186,7 @@ static NSString * const kTaskMetadataFileName = @"taskMetadata";
             [data writeToURL:newURL options:options error:&error];
             if (!error)
             {
+                [self evaluateDiskSizeLimit];
                 NSDictionary *attributes = [[NSFileManager defaultManager] attributesOfItemAtPath:[newURL path] error:nil];
                 
                 SFSFileDescriptor *descriptor = [[SFSFileDescriptor alloc] init];
@@ -352,6 +360,7 @@ static NSString * const kTaskMetadataFileName = @"taskMetadata";
         }
         else
         {
+            [self evaluateDiskSizeLimit];
             NSDictionary *attributes = [[NSFileManager defaultManager] attributesOfItemAtPath:[newURL path] error:nil];
             
             SFSFileDescriptor *descriptor = [[SFSFileDescriptor alloc] init];
@@ -368,12 +377,12 @@ static NSString * const kTaskMetadataFileName = @"taskMetadata";
         }
     }
     
-    [self completeWithBlock:metadata.completionBlock fileURL:((!error) ? newURL : nil) error:error];
+    [self completeWithMetadata:metadata fileURL:((!error) ? newURL : nil) error:error];
 }
 
-- (void)completeWithBlock:(SFSFileManagerCompletion)block fileURL:(NSURL *)url error:(NSError *)error
+- (void)completeWithMetadata:(SFSTaskMetadata *)metadata fileURL:(NSURL *)url error:(NSError *)error
 {
-    if (block)
+    for (SFSFileManagerCompletion block in metadata.completionBlocks)
     {
         dispatch_async(dispatch_get_main_queue(), ^{
             block(url, error);
@@ -448,6 +457,33 @@ static NSString * const kTaskMetadataFileName = @"taskMetadata";
         urlComponent++;
     }
     return urlComponent;
+}
+
+- (void)evaluateDiskSizeLimit
+{
+    NSError *error = nil;
+    NSDictionary *attributes = [[NSFileManager defaultManager] attributesOfItemAtPath:[self rootDirectory] error:&error];
+
+}
+
+- (void)checkIfFetchingURLRequest:(NSURLRequest *)request appendingCompletion:(SFSFileManagerCompletion)blockToAdd withCompletion:(void (^)(BOOL currentlyFetching))block
+{
+    __typeof__(self) __weak weakSelf = self;
+    [self.urlSession getTasksWithCompletionHandler:^(NSArray *dataTasks, NSArray *uploadTasks, NSArray *downloadTasks) {
+        BOOL currentlyFetching = NO;
+        for (NSURLSessionDownloadTask *task in downloadTasks)
+        {
+            if ((task.state == NSURLSessionTaskStateRunning) && [task.originalRequest isEqual:request])
+            {
+                SFSTaskMetadata *metadata = [weakSelf metadataForTask:task];
+                [metadata.completionBlocks addObject:[blockToAdd copy]];
+                
+                currentlyFetching = YES;
+                break;
+            }
+        }
+        block(currentlyFetching);
+    }];
 }
 
 #pragma mark - Notifications
@@ -537,7 +573,7 @@ didCompleteWithError:(NSError *)error
             [self.taskMetadata removeObject:metadata];
             [self saveTaskMetadata];
             
-            [self completeWithBlock:metadata.completionBlock fileURL:nil error:error];
+            [self completeWithMetadata:metadata fileURL:nil error:error];
         }
     }
 }
@@ -560,7 +596,8 @@ didFinishDownloadingToURL:(NSURL *)location
  totalBytesWritten:(int64_t)totalBytesWritten
 totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite
 {
-    // consider implementing callbacks for progress
+    // consider adding progress update callbacks
+//    NSLog(@"writing data");
 }
 
 @end

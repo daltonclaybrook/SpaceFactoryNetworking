@@ -25,8 +25,15 @@ static NSString * const kEncryptedKey = @"kEncryptedKey";
     metadata.fileIdentifier = fileIdentifier;
     metadata.fileGroup = fileGroup;
     metadata.encrypted = encrypted;
-    metadata.completionBlock = block;
+    metadata.completionBlocks = [@[[block copy]] mutableCopy];
     return metadata;
+}
+
+#pragma mark - Accessors
+
+- (BOOL)isRunning
+{
+    return (self.task && self.task.state == NSURLSessionTaskStateRunning);
 }
 
 #pragma mark - NSCoding
@@ -62,7 +69,7 @@ static NSString * const kEncryptedKey = @"kEncryptedKey";
 
 - (void)ignoreResults
 {
-    self.completionBlock = nil;
+    self.completionBlocks = nil;
 }
 
 @end

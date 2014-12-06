@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6211" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6204"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -15,11 +15,78 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="LrD-4A-cg4">
+                                <rect key="frame" x="30" y="83" width="540" height="439"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uZS-c9-TJh">
+                                <rect key="frame" x="16" y="28" width="34" height="30"/>
+                                <state key="normal" title="Evict">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="evictButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="iNa-QE-wRB"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q7N-wd-flA">
+                                <rect key="frame" x="545" y="28" width="39" height="30"/>
+                                <state key="normal" title="Fetch">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="fetchButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="fCh-8w-Yrc"/>
+                                </connections>
+                            </button>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="JEY-Ec-kPv">
+                                <rect key="frame" x="16" y="552" width="568" height="29"/>
+                                <segments>
+                                    <segment title="First"/>
+                                    <segment title="Second"/>
+                                </segments>
+                                <connections>
+                                    <action selector="segmentValueChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="MjW-KZ-fRk"/>
+                                </connections>
+                            </segmentedControl>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="tZK-At-hrK">
+                                <rect key="frame" x="282" y="282" width="37" height="37"/>
+                                <color key="color" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            </activityIndicatorView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WX0-hV-FYU">
+                                <rect key="frame" x="279" y="32" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="JEY-Ec-kPv" secondAttribute="bottom" constant="20" id="3LW-jS-rpE"/>
+                            <constraint firstItem="JEY-Ec-kPv" firstAttribute="top" secondItem="LrD-4A-cg4" secondAttribute="bottom" constant="30" id="8Mg-7Y-9op"/>
+                            <constraint firstItem="uZS-c9-TJh" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="28" id="9JM-u7-bdL"/>
+                            <constraint firstAttribute="centerX" secondItem="WX0-hV-FYU" secondAttribute="centerX" id="HA4-cn-hsF"/>
+                            <constraint firstItem="uZS-c9-TJh" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="16" id="PHU-IR-1TR"/>
+                            <constraint firstAttribute="trailing" secondItem="LrD-4A-cg4" secondAttribute="trailing" constant="30" id="Qg3-8I-Bmd"/>
+                            <constraint firstItem="q7N-wd-flA" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="28" id="ULS-ys-Jb9"/>
+                            <constraint firstAttribute="trailing" secondItem="JEY-Ec-kPv" secondAttribute="trailing" constant="16" id="XsI-HW-Nut"/>
+                            <constraint firstItem="WX0-hV-FYU" firstAttribute="centerY" secondItem="uZS-c9-TJh" secondAttribute="centerY" id="Zak-PK-qzW"/>
+                            <constraint firstItem="LrD-4A-cg4" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="30" id="e11-b1-0jJ"/>
+                            <constraint firstAttribute="centerX" secondItem="tZK-At-hrK" secondAttribute="centerX" id="qrv-85-grR"/>
+                            <constraint firstItem="JEY-Ec-kPv" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="16" id="tFd-gA-CEh"/>
+                            <constraint firstAttribute="centerY" secondItem="tZK-At-hrK" secondAttribute="centerY" id="wkR-6N-gPc"/>
+                            <constraint firstAttribute="trailing" secondItem="q7N-wd-flA" secondAttribute="trailing" constant="16" id="yQn-cZ-yJs"/>
+                            <constraint firstItem="LrD-4A-cg4" firstAttribute="top" secondItem="WX0-hV-FYU" secondAttribute="bottom" constant="30" id="zzf-RZ-fH0"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="imageView" destination="LrD-4A-cg4" id="T3m-DC-ohU"/>
+                        <outlet property="loadingIndicator" destination="tZK-At-hrK" id="XxS-jg-6ae"/>
+                        <outlet property="segmentedControl" destination="JEY-Ec-kPv" id="bU2-uB-3YD"/>
+                        <outlet property="statusLabel" destination="WX0-hV-FYU" id="le9-Ni-dfL"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="324" y="175"/>
         </scene>
     </scenes>
 </document>

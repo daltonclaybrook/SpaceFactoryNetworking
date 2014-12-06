@@ -11,6 +11,8 @@
 
 @protocol SFSTask <NSObject>
 
+@property (nonatomic, assign, readonly, getter=isRunning) BOOL running;
+
 - (void)cancelRequest;
 - (void)ignoreResults;
 
@@ -24,7 +26,7 @@
 @property (nonatomic, copy) NSString *fileIdentifier;
 @property (nonatomic, copy) NSString *fileGroup;
 @property (nonatomic, assign) BOOL encrypted;
-@property (nonatomic, copy) SFSFileManagerCompletion completionBlock;
+@property (nonatomic, strong) NSMutableArray *completionBlocks;
 
 + (instancetype)metadataForTaskIdentifier:(NSUInteger)identifier task:(NSURLSessionTask *)task fileIdentifier:(NSString *)fileIdentifier fileGroup:(NSString *)fileGroup encrypted:(BOOL)encrypted completion:(SFSFileManagerCompletion)block;
 
