@@ -92,9 +92,11 @@ static NSString * const kTaskMetadataFileName = @"taskMetadata";
     }
     
     id<SFSTask> returnTask = nil;
-    NSURL *existingFile = [self urlForIdentifier:identifier group:group fileDescriptor:nil];
+    SFSFileDescriptor *descriptor = nil;
+    NSURL *existingFile = [self urlForIdentifier:identifier group:group fileDescriptor:&descriptor];
     if (existingFile)
     {
+        descriptor.lastAccessDate = [NSDate date];
         if (block)
         {
             block(existingFile, nil);
@@ -128,7 +130,13 @@ static NSString * const kTaskMetadataFileName = @"taskMetadata";
         NSAssert(NO, @"One or more parameters are invalid: %@", NSStringFromSelector(_cmd));
         return nil;
     }
-    return [self urlForIdentifier:identifier group:fileGroup fileDescriptor:nil];
+    
+    SFSFileDescriptor *descriptor = nil;
+    NSURL *url = [self urlForIdentifier:identifier group:fileGroup fileDescriptor:&descriptor];
+    descriptor.lastAccessDate = [NSDate date];
+    [self saveManifest];
+    
+    return url;
 }
 
 #pragma mark - File Storing
@@ -521,13 +529,16 @@ static NSString * const kTaskMetadataFileName = @"taskMetadata";
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task
 didCompleteWithError:(NSError *)error
 {
-    SFSTaskMetadata *metadata = [self metadataForTask:task];
-    if (metadata)
+    if (error)
     {
-        [self.taskMetadata removeObject:metadata];
-        [self saveTaskMetadata];
-        
-        [self completeWithBlock:metadata.completionBlock fileURL:nil error:error];
+        SFSTaskMetadata *metadata = [self metadataForTask:task];
+        if (metadata)
+        {
+            [self.taskMetadata removeObject:metadata];
+            [self saveTaskMetadata];
+            
+            [self completeWithBlock:metadata.completionBlock fileURL:nil error:error];
+        }
     }
 }
 

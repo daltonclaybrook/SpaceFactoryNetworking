@@ -28,12 +28,15 @@
     
     self.fileManager = [[SFSFileManager alloc] init];
     self.fileManager.usesEncryptionByDefault = YES;
-    [self.fileManager evictAllFiles];
     
-    [self.fileManager fetchFileDataAtURL:[NSURL URLWithString:urlString] withCompletion:^(NSURL *fileURL, NSError *error) {
+    id<SFSTask> task = [self.fileManager fetchFileDataAtURL:[NSURL URLWithString:urlString] withCompletion:^(NSURL *fileURL, NSError *error) {
         
         NSLog(@"");
     }];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        NSLog(@"task: %@", task);
+    });
 }
 
 - (void)viewWillAppear:(BOOL)animated
