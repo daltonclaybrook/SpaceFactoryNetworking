@@ -47,7 +47,7 @@
 		BE632CEB1A322C3E00CE9121 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		BE632CEC1A322C3E00CE9121 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		BE632CEF1A322C3E00CE9121 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		BE632CF11A322C3E00CE9121 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		BE632CF11A322C3E00CE9121 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = ../Images.xcassets; sourceTree = "<group>"; };
 		BE632CF41A322C3E00CE9121 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		BE632CFA1A322C3F00CE9121 /* SpaceFactoryNetworkingTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SpaceFactoryNetworkingTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE632CFF1A322C3F00CE9121 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -87,14 +87,14 @@
 			name = Constants;
 			sourceTree = "<group>";
 		};
-		75BF57921A32F96000C82F7D /* Presentation */ = {
+		75BF57921A32F96000C82F7D /* Example */ = {
 			isa = PBXGroup;
 			children = (
-				75BF579B1A32FF2200C82F7D /* Views */,
-				75BF57961A32F98D00C82F7D /* Interface */,
-				75BF57931A32F96600C82F7D /* Controllers */,
+				75BF579F1A3305EF00C82F7D /* Presentation */,
+				75BF57951A32F97B00C82F7D /* Resources */,
+				BE632CE41A322C3E00CE9121 /* Supporting Files */,
 			);
-			name = Presentation;
+			path = Example;
 			sourceTree = "<group>";
 		};
 		75BF57931A32F96600C82F7D /* Controllers */ = {
@@ -132,6 +132,16 @@
 			name = Views;
 			sourceTree = "<group>";
 		};
+		75BF579F1A3305EF00C82F7D /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				75BF57931A32F96600C82F7D /* Controllers */,
+				75BF57961A32F98D00C82F7D /* Interface */,
+				75BF579B1A32FF2200C82F7D /* Views */,
+			);
+			name = Presentation;
+			sourceTree = "<group>";
+		};
 		BE632CD81A322C3E00CE9121 = {
 			isa = PBXGroup;
 			children = (
@@ -153,10 +163,8 @@
 		BE632CE31A322C3E00CE9121 /* SpaceFactoryNetworking */ = {
 			isa = PBXGroup;
 			children = (
-				BE632D0A1A322C4C00CE9121 /* Networking */,
-				75BF57921A32F96000C82F7D /* Presentation */,
-				75BF57951A32F97B00C82F7D /* Resources */,
-				BE632CE41A322C3E00CE9121 /* Supporting Files */,
+				BE632D0A1A322C4C00CE9121 /* Core */,
+				75BF57921A32F96000C82F7D /* Example */,
 			);
 			path = SpaceFactoryNetworking;
 			sourceTree = "<group>";
@@ -189,7 +197,7 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		BE632D0A1A322C4C00CE9121 /* Networking */ = {
+		BE632D0A1A322C4C00CE9121 /* Core */ = {
 			isa = PBXGroup;
 			children = (
 				750B3E831A32C6B90076BB0D /* Constants */,
@@ -202,7 +210,7 @@
 				BE632D111A325A1400CE9121 /* SFSTaskMetadata.h */,
 				BE632D121A325A1400CE9121 /* SFSTaskMetadata.m */,
 			);
-			name = Networking;
+			path = Core;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -343,6 +351,7 @@
 				BE632CEF1A322C3E00CE9121 /* Base */,
 			);
 			name = Main.storyboard;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		BE632CF31A322C3E00CE9121 /* LaunchScreen.xib */ = {
@@ -351,6 +360,7 @@
 				BE632CF41A322C3E00CE9121 /* Base */,
 			);
 			name = LaunchScreen.xib;
+			path = ..;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -438,7 +448,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				INFOPLIST_FILE = SpaceFactoryNetworking/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/SpaceFactoryNetworking/Example/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -448,7 +458,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				INFOPLIST_FILE = SpaceFactoryNetworking/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/SpaceFactoryNetworking/Example/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
