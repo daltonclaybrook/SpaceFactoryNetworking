@@ -88,12 +88,12 @@ static NSString * const kVariableDataService = @"https://datautility.herokuapp.c
 
 - (NSArray *)createImageURLs
 {
-    return @[ [NSURL URLWithString:@"https://placekitten.com/1000/1000"],
-              [NSURL URLWithString:@"https://placekitten.com/1000/1500"],
-              [NSURL URLWithString:@"https://placekitten.com/1000/2000"],
-              [NSURL URLWithString:@"https://placekitten.com/1000/2500"],
-              [NSURL URLWithString:@"https://placekitten.com/1000/3000"],
-              [NSURL URLWithString:@"https://placekitten.com/1000/3500"] ];
+    return @[ [NSURL URLWithString:@"https://placekitten.com/1050/1000"],
+              [NSURL URLWithString:@"https://placekitten.com/1100/1000"],
+              [NSURL URLWithString:@"https://placekitten.com/1150/1000"],
+              [NSURL URLWithString:@"https://placekitten.com/1200/1000"],
+              [NSURL URLWithString:@"https://placekitten.com/1250/1000"],
+              [NSURL URLWithString:@"https://placekitten.com/1300/1000"] ];
 }
 
 - (void)setupSegmentedControl
@@ -125,10 +125,7 @@ static NSString * const kVariableDataService = @"https://datautility.herokuapp.c
 
 - (void)prepareToSwitchImage
 {
-    if ([self.currentTask isRunning])
-    {
-        [self.loadingIndicator stopAnimating];
-    }
+    [self.loadingIndicator stopAnimating];
     
     // we are initiating a new fetch. we no longer care about the results of the old fetch, but we do want the request to continue so the image will become cached. If we happen to be starting a fetch that is identical to a currently running fetch, our completion block will become associated with that request.
     [self.currentTask ignoreResults];
