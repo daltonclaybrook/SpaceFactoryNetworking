@@ -12,7 +12,6 @@
 #import "SFSTaskMetadata.h"
 
 NSString * const SFSFileManagerDefaultFileGroup = @"SFSFileManagerDefaultFileGroup";
-static NSString * const SFSFileManagerUnprotectedFileGroup = @"SFSFileManagerUnprotectedFileGroup";
 static NSString * const SFSFileManagerRootDirectory = @"SFSFileManagerRootDirectory";
 
 static NSString * const kBackgroundSessionIdentifier = @"kBackgroundSessionIdentifier";
@@ -320,7 +319,7 @@ static NSString * const kTaskMetadataFileName = @"taskMetadata";
     NSURL *url = nil;
     NSUInteger index = [self.fileManifest indexOfObjectPassingTest:^BOOL(SFSFileDescriptor *descriptor, NSUInteger idx, BOOL *stop) {
         return ([descriptor.identifier isEqualToString:identifier] &&
-                [descriptor.fileGroup isEqualToString:fileGroup]);
+                [[descriptor currentFileGroup] isEqualToString:fileGroup]);
     }];
     
     if (index != NSNotFound)

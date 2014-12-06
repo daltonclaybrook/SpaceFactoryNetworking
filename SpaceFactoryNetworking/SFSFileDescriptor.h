@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+extern NSString * const SFSFileManagerUnprotectedFileGroup;
+
 @interface SFSFileDescriptor : NSObject <NSCoding>
 
 @property (nonatomic, copy) NSString *identifier;
@@ -18,6 +20,10 @@
 @property (nonatomic, assign) BOOL awaitingEncryption;
 @property (nonatomic, strong) NSDate *lastAccessDate;
 
+/**
+ *  Will either return 'fileGroup', or the unprotected file group if awaiting encryption
+ */
+- (NSString *)currentFileGroup;
 - (NSURL *)fileURLWithBaseComponent:(NSString *)base;
 - (NSURL *)fileURLWithBaseComponent:(NSString *)base fileGroup:(NSString *)group;
 

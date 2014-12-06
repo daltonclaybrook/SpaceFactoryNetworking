@@ -8,6 +8,8 @@
 
 #import "SFSFileDescriptor.h"
 
+NSString * const SFSFileManagerUnprotectedFileGroup = @"SFSFileManagerUnprotectedFileGroup";
+
 static NSString * const kIdentifierKey = @"kIdentifierKey";
 static NSString * const kFileGroupKey = @"kFileGroupKey";
 static NSString * const kFileURLComponentKey = @"kFileURLComponentKey";
@@ -20,9 +22,14 @@ static NSString * const kLastAccessDateKey = @"kLastAccessDateKey";
 
 #pragma mark - Public
 
+- (NSString *)currentFileGroup
+{
+    return (self.awaitingEncryption) ? SFSFileManagerUnprotectedFileGroup : self.fileGroup;
+}
+
 - (NSURL *)fileURLWithBaseComponent:(NSString *)base
 {
-    return [self fileURLWithBaseComponent:base fileGroup:self.fileGroup];
+    return [self fileURLWithBaseComponent:base fileGroup:[self currentFileGroup]];
 }
 
 - (NSURL *)fileURLWithBaseComponent:(NSString *)base fileGroup:(NSString *)group
