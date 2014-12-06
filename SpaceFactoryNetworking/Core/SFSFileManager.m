@@ -40,6 +40,8 @@ static NSString * const kTaskMetadataFileName = @"taskMetadata";
 
 - (void)SFSFileManagerCommonInit
 {
+    _diskSizeLimit = SFSFileManagerNoDiskSizeLimit;
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(protectedDataWillBecomeUnavailableNotification:) name:UIApplicationProtectedDataWillBecomeUnavailable object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(protectedDataDidBecomeAvailableNotification:) name:UIApplicationProtectedDataDidBecomeAvailable object:nil];
     
@@ -58,6 +60,18 @@ static NSString * const kTaskMetadataFileName = @"taskMetadata";
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+#pragma mark - Accessors
+
+- (void)setDiskSizeLimit:(NSInteger)diskSizeLimit
+{
+    if (_diskSizeLimit == diskSizeLimit)
+    {
+        return;
+    }
+    _diskSizeLimit = diskSizeLimit;
+    [self evaluateDiskSizeLimit];
 }
 
 #pragma mark - Fetching
@@ -209,17 +223,21 @@ static NSString * const kTaskMetadataFileName = @"taskMetadata";
 
 - (void)evictFileForIdentifier:(NSString *)identifier
 {
-    [self evictFileForIdentifier:identifier inGroup:SFSFileManagerDefaultFileGroup];
+    [self evictFileForIdentifier:identifier inGroup:SFSFileManagerDefaultFileGroup save:YES];
 }
 
-- (void)evictFileForIdentifier:(NSString *)identifier inGroup:(NSString *)fileGroup
+- (void)evictFileForIdentifier:(NSString *)identifier inGroup:(NSString *)fileGroup save:(BOOL)save
 {
     SFSFileDescriptor *descriptor = nil;
     NSURL *url = [self urlForIdentifier:identifier group:fileGroup fileDescriptor:&descriptor];
     [[NSFileManager defaultManager] removeItemAtURL:url error:nil];
     
     [self.fileManifest removeObject:descriptor];
-    [self saveManifest];
+    
+    if (save)
+    {
+        [self saveManifest];
+    }
 }
 
 - (void)evictAllFilesInGroup:(NSString *)fileGroup
@@ -461,9 +479,49 @@ static NSString * const kTaskMetadataFileName = @"taskMetadata";
 
 - (void)evaluateDiskSizeLimit
 {
-    NSError *error = nil;
-    NSDictionary *attributes = [[NSFileManager defaultManager] attributesOfItemAtPath:[self rootDirectory] error:&error];
+    NSUInteger totalFileSize = [self totalFileSize];
+    if ((self.diskSizeLimit != SFSFileManagerNoDiskSizeLimit) && (totalFileSize > self.diskSizeLimit))
+    {
+        NSArray *largeToSmall = [self.fileManifest sortedArrayUsingComparator:^NSComparisonResult(SFSFileDescriptor *descriptor1, SFSFileDescriptor *descriptor2) {
+            return [@(descriptor2.fileSize) compare:@(descriptor1.fileSize)];
+        }];
+        NSArray *oldToNew = [self.fileManifest sortedArrayUsingComparator:^NSComparisonResult(SFSFileDescriptor *descriptor1, SFSFileDescriptor *descriptor2) {
+            return [descriptor1.lastAccessDate compare:descriptor2.lastAccessDate];
+        }];
+        
+        NSMutableArray *finalOrder = [[self orderedArrayUsingArray:largeToSmall andArray:oldToNew] mutableCopy];
+        while ((totalFileSize > self.diskSizeLimit) && finalOrder.count)
+        {
+            SFSFileDescriptor *descriptor = [finalOrder firstObject];
+            [finalOrder removeObjectAtIndex:0];
+            
+            [self evictFileForIdentifier:descriptor.identifier inGroup:descriptor.fileGroup save:NO];
+            totalFileSize -= descriptor.fileSize;
+        }
+        [self saveManifest];
+    }
+}
 
+- (NSArray *)orderedArrayUsingArray:(NSArray *)array1 andArray:(NSArray *)array2
+{
+    [array1 enumerateObjectsUsingBlock:^(SFSFileDescriptor *descriptor, NSUInteger idx, BOOL *stop) {
+        
+        descriptor.evictionRank = idx + [array2 indexOfObject:descriptor];
+    }];
+    
+    return [array1 sortedArrayUsingComparator:^NSComparisonResult(SFSFileDescriptor *descriptor1, SFSFileDescriptor *descriptor2) {
+        return [@(descriptor1.evictionRank) compare:@(descriptor2.evictionRank)];
+    }];
+}
+
+- (NSUInteger)totalFileSize
+{
+    NSUInteger totalSize = 0;
+    for (SFSFileDescriptor *descriptor in self.fileManifest)
+    {
+        totalSize += descriptor.fileSize;
+    }
+    return totalSize;
 }
 
 - (void)checkIfFetchingURLRequest:(NSURLRequest *)request appendingCompletion:(SFSFileManagerCompletion)blockToAdd withCompletion:(void (^)(BOOL currentlyFetching))block

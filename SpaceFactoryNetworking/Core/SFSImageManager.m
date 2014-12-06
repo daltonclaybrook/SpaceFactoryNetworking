@@ -82,7 +82,7 @@ NSString * const SFSImageManagerErrorDomain = @"SFSImageManagerErrorDomain";
             image = [weakSelf imageFromFileURL:fileURL error:&error];
             if (error)
             {
-                [weakSelf evictFileForIdentifier:identifier inGroup:group];
+                [weakSelf evictFileForIdentifier:identifier inGroup:group save:YES];
             }
         }
         

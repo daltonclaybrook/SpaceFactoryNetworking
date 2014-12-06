@@ -21,6 +21,11 @@ extern NSString * const SFSFileManagerUnprotectedFileGroup;
 @property (nonatomic, strong) NSDate *lastAccessDate;
 
 /**
+ *  This property is not persisted to disk. It is used by the file manager when determining which items should be evicted under memory pressure.
+ */
+@property (nonatomic, assign) NSUInteger evictionRank;
+
+/**
  *  Will either return 'fileGroup', or the unprotected file group if awaiting encryption
  */
 - (NSString *)currentFileGroup;

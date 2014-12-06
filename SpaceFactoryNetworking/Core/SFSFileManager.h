@@ -38,7 +38,7 @@
 - (void)storeData:(NSData *)data usingIdentifier:(NSString *)identifier inGroup:(NSString *)fileGroup usingDiskEncryption:(BOOL)encrypt;
 
 - (void)evictFileForIdentifier:(NSString *)identifier;  // assumes default file group
-- (void)evictFileForIdentifier:(NSString *)identifier inGroup:(NSString *)fileGroup;
+- (void)evictFileForIdentifier:(NSString *)identifier inGroup:(NSString *)fileGroup save:(BOOL)save;
 - (void)evictAllFilesInGroup:(NSString *)fileGroup;
 - (void)evictAllFiles;
 

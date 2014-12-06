@@ -51,6 +51,8 @@ static NSString * const kVariableDataService = @"https://datautility.herokuapp.c
     {
         _imageManager = [[SFSImageManager alloc] init];
         _imageManager.usesEncryptionByDefault = YES;
+        
+        _imageManager.diskSizeLimit = 200000;
     }
     return _imageManager;
 }
