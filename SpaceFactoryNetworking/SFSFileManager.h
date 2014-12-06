@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "SFSTask.h"
 
 NSInteger const SFSFileManagerNoDiskSizeLimit = -1;
 extern NSString * const SFSFileManagerDefaultFileGroup;
@@ -28,11 +29,11 @@ typedef void(^SFSFileManagerCompletion)(NSURL *fileURL, NSError *error);
 /**
  *  url absolute string is used as the identifier
  */
-- (void)fetchFileDataAtURL:(NSURL *)url withCompletion:(SFSFileManagerCompletion)block;
-- (void)fetchFileDataAtURL:(NSURL *)url usingIdentifier:(NSString *)identifier withCompletion:(SFSFileManagerCompletion)block;
-- (void)fetchFileDataAtURL:(NSURL *)url usingIdentifier:(NSString *)identifier fileGroup:(NSString *)group withCompletion:(SFSFileManagerCompletion)block;
-- (void)fetchFileDataAtURL:(NSURL *)url usingIdentifier:(NSString *)identifier fileGroup:(NSString *)group usingDiskEncryption:(BOOL)encrypt withCompletion:(SFSFileManagerCompletion)block;
-- (void)fetchFileDataForRequest:(NSURLRequest *)request usingIdentifier:(NSString *)identifier fileGroup:(NSString *)group usingDiskEncryption:(BOOL)encrypt withCompletion:(SFSFileManagerCompletion)block;
+- (id<SFSTask>)fetchFileDataAtURL:(NSURL *)url withCompletion:(SFSFileManagerCompletion)block;
+- (id<SFSTask>)fetchFileDataAtURL:(NSURL *)url usingIdentifier:(NSString *)identifier withCompletion:(SFSFileManagerCompletion)block;
+- (id<SFSTask>)fetchFileDataAtURL:(NSURL *)url usingIdentifier:(NSString *)identifier fileGroup:(NSString *)group withCompletion:(SFSFileManagerCompletion)block;
+- (id<SFSTask>)fetchFileDataAtURL:(NSURL *)url usingIdentifier:(NSString *)identifier fileGroup:(NSString *)group usingDiskEncryption:(BOOL)encrypt withCompletion:(SFSFileManagerCompletion)block;
+- (id<SFSTask>)fetchFileDataForRequest:(NSURLRequest *)request usingIdentifier:(NSString *)identifier fileGroup:(NSString *)group usingDiskEncryption:(BOOL)encrypt withCompletion:(SFSFileManagerCompletion)block;
 
 - (NSURL *)existingFileURLForIdentifier:(NSString *)identifier;
 - (NSURL *)existingFileURLForIdentifier:(NSString *)identifier inGroup:(NSString *)fileGroup;

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		750B3E5E1A32A1230076BB0D /* SFSImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 750B3E5D1A32A1230076BB0D /* SFSImageManager.m */; };
+		750B3E6E1A32AD360076BB0D /* SFSTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 750B3E6D1A32AD360076BB0D /* SFSTask.m */; };
 		BE632CE71A322C3E00CE9121 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BE632CE61A322C3E00CE9121 /* main.m */; };
 		BE632CEA1A322C3E00CE9121 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BE632CE91A322C3E00CE9121 /* AppDelegate.m */; };
 		BE632CED1A322C3E00CE9121 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE632CEC1A322C3E00CE9121 /* ViewController.m */; };
@@ -33,6 +34,8 @@
 /* Begin PBXFileReference section */
 		750B3E5C1A32A1230076BB0D /* SFSImageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFSImageManager.h; sourceTree = "<group>"; };
 		750B3E5D1A32A1230076BB0D /* SFSImageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFSImageManager.m; sourceTree = "<group>"; };
+		750B3E6C1A32AD360076BB0D /* SFSTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFSTask.h; sourceTree = "<group>"; };
+		750B3E6D1A32AD360076BB0D /* SFSTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFSTask.m; sourceTree = "<group>"; };
 		BE632CE11A322C3E00CE9121 /* SpaceFactoryNetworking.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpaceFactoryNetworking.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE632CE51A322C3E00CE9121 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BE632CE61A322C3E00CE9121 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -143,6 +146,8 @@
 				BE632D0F1A3248F100CE9121 /* SFSFileDescriptor.m */,
 				BE632D111A325A1400CE9121 /* SFSTaskMetadata.h */,
 				BE632D121A325A1400CE9121 /* SFSTaskMetadata.m */,
+				750B3E6C1A32AD360076BB0D /* SFSTask.h */,
+				750B3E6D1A32AD360076BB0D /* SFSTask.m */,
 			);
 			name = Networking;
 			sourceTree = "<group>";
@@ -251,6 +256,7 @@
 				BE632CED1A322C3E00CE9121 /* ViewController.m in Sources */,
 				BE632D101A3248F100CE9121 /* SFSFileDescriptor.m in Sources */,
 				BE632CEA1A322C3E00CE9121 /* AppDelegate.m in Sources */,
+				750B3E6E1A32AD360076BB0D /* SFSTask.m in Sources */,
 				BE632D0D1A322C6B00CE9121 /* SFSFileManager.m in Sources */,
 				BE632D131A325A1400CE9121 /* SFSTaskMetadata.m in Sources */,
 				BE632CE71A322C3E00CE9121 /* main.m in Sources */,

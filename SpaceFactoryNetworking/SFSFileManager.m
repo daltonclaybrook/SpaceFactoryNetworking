@@ -64,35 +64,36 @@ static NSString * const kTaskMetadataFileName = @"taskMetadata";
 
 #pragma mark - Fetching
 
-- (void)fetchFileDataAtURL:(NSURL *)url withCompletion:(SFSFileManagerCompletion)block
+- (id<SFSTask>)fetchFileDataAtURL:(NSURL *)url withCompletion:(SFSFileManagerCompletion)block
 {
-    [self fetchFileDataAtURL:url usingIdentifier:[url absoluteString] withCompletion:block];
+    return [self fetchFileDataAtURL:url usingIdentifier:[url absoluteString] withCompletion:block];
 }
 
-- (void)fetchFileDataAtURL:(NSURL *)url usingIdentifier:(NSString *)identifier withCompletion:(SFSFileManagerCompletion)block
+- (id<SFSTask>)fetchFileDataAtURL:(NSURL *)url usingIdentifier:(NSString *)identifier withCompletion:(SFSFileManagerCompletion)block
 {
-    [self fetchFileDataAtURL:url usingIdentifier:identifier fileGroup:SFSFileManagerDefaultFileGroup withCompletion:block];
+    return [self fetchFileDataAtURL:url usingIdentifier:identifier fileGroup:SFSFileManagerDefaultFileGroup withCompletion:block];
 }
 
-- (void)fetchFileDataAtURL:(NSURL *)url usingIdentifier:(NSString *)identifier fileGroup:(NSString *)group withCompletion:(SFSFileManagerCompletion)block
+- (id<SFSTask>)fetchFileDataAtURL:(NSURL *)url usingIdentifier:(NSString *)identifier fileGroup:(NSString *)group withCompletion:(SFSFileManagerCompletion)block
 {
-    [self fetchFileDataAtURL:url usingIdentifier:identifier fileGroup:group usingDiskEncryption:self.usesEncryptionByDefault withCompletion:block];
+    return [self fetchFileDataAtURL:url usingIdentifier:identifier fileGroup:group usingDiskEncryption:self.usesEncryptionByDefault withCompletion:block];
 }
 
-- (void)fetchFileDataAtURL:(NSURL *)url usingIdentifier:(NSString *)identifier fileGroup:(NSString *)group usingDiskEncryption:(BOOL)encrypt withCompletion:(SFSFileManagerCompletion)block
+- (id<SFSTask>)fetchFileDataAtURL:(NSURL *)url usingIdentifier:(NSString *)identifier fileGroup:(NSString *)group usingDiskEncryption:(BOOL)encrypt withCompletion:(SFSFileManagerCompletion)block
 {
     NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
-    [self fetchFileDataForRequest:urlRequest usingIdentifier:identifier fileGroup:group usingDiskEncryption:encrypt withCompletion:block];
+    return [self fetchFileDataForRequest:urlRequest usingIdentifier:identifier fileGroup:group usingDiskEncryption:encrypt withCompletion:block];
 }
 
-- (void)fetchFileDataForRequest:(NSURLRequest *)request usingIdentifier:(NSString *)identifier fileGroup:(NSString *)group usingDiskEncryption:(BOOL)encrypt withCompletion:(SFSFileManagerCompletion)block
+- (id<SFSTask>)fetchFileDataForRequest:(NSURLRequest *)request usingIdentifier:(NSString *)identifier fileGroup:(NSString *)group usingDiskEncryption:(BOOL)encrypt withCompletion:(SFSFileManagerCompletion)block
 {
     if (!request || !identifier.length || !group.length)
     {
         NSAssert(NO, @"One or more parameters are invalid: %@", NSStringFromSelector(_cmd));
-        return;
+        return nil;
     }
     
+    SFSTask *returnTask = nil;
     NSURL *existingFile = [self urlForIdentifier:identifier group:group fileDescriptor:nil];
     if (existingFile)
     {
@@ -109,8 +110,13 @@ static NSString * const kTaskMetadataFileName = @"taskMetadata";
         [self.taskMetadata addObject:metadata];
         [self saveTaskMetadata];
         
+        returnTask = [[SFSTask alloc] init];
+        returnTask.task = task;
+        returnTask.metadata = metadata;
+        
         [task resume];
     }
+    return returnTask;
 }
 
 #pragma mark - File Retrieval

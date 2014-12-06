@@ -14,29 +14,29 @@ NSString * const SFSImageManagerErrorDomain = @"SFSImageManagerErrorDomain";
 
 #pragma mark - Public
 
-- (void)fetchImageAtURL:(NSURL *)url withCompletion:(SFSImageManagerCompletion)block
+- (id<SFSTask>)fetchImageAtURL:(NSURL *)url withCompletion:(SFSImageManagerCompletion)block
 {
-    [self fetchFileDataAtURL:url withCompletion:[self completionBlockWithImageBlock:block]];
+    return [self fetchFileDataAtURL:url withCompletion:[self completionBlockWithImageBlock:block]];
 }
 
-- (void)fetchImageAtURL:(NSURL *)url usingIdentifier:(NSString *)identifier withCompletion:(SFSImageManagerCompletion)block
+- (id<SFSTask>)fetchImageAtURL:(NSURL *)url usingIdentifier:(NSString *)identifier withCompletion:(SFSImageManagerCompletion)block
 {
-    [self fetchFileDataAtURL:url usingIdentifier:identifier withCompletion:[self completionBlockWithImageBlock:block]];
+    return [self fetchFileDataAtURL:url usingIdentifier:identifier withCompletion:[self completionBlockWithImageBlock:block]];
 }
 
-- (void)fetchImageAtURL:(NSURL *)url usingIdentifier:(NSString *)identifier fileGroup:(NSString *)group withCompletion:(SFSImageManagerCompletion)block
+- (id<SFSTask>)fetchImageAtURL:(NSURL *)url usingIdentifier:(NSString *)identifier fileGroup:(NSString *)group withCompletion:(SFSImageManagerCompletion)block
 {
-    [self fetchFileDataAtURL:url usingIdentifier:identifier fileGroup:group withCompletion:[self completionBlockWithImageBlock:block]];
+    return [self fetchFileDataAtURL:url usingIdentifier:identifier fileGroup:group withCompletion:[self completionBlockWithImageBlock:block]];
 }
 
-- (void)fetchImageAtURL:(NSURL *)url usingIdentifier:(NSString *)identifier fileGroup:(NSString *)group usingDiskEncryption:(BOOL)encrypt withCompletion:(SFSImageManagerCompletion)block
+- (id<SFSTask>)fetchImageAtURL:(NSURL *)url usingIdentifier:(NSString *)identifier fileGroup:(NSString *)group usingDiskEncryption:(BOOL)encrypt withCompletion:(SFSImageManagerCompletion)block
 {
-    [self fetchFileDataAtURL:url usingIdentifier:identifier fileGroup:group usingDiskEncryption:encrypt withCompletion:[self completionBlockWithImageBlock:block]];
+    return [self fetchFileDataAtURL:url usingIdentifier:identifier fileGroup:group usingDiskEncryption:encrypt withCompletion:[self completionBlockWithImageBlock:block]];
 }
 
-- (void)fetchImageForRequest:(NSURLRequest *)request usingIdentifier:(NSString *)identifier fileGroup:(NSString *)group usingDiskEncryption:(BOOL)encrypt withCompletion:(SFSImageManagerCompletion)block
+- (id<SFSTask>)fetchImageForRequest:(NSURLRequest *)request usingIdentifier:(NSString *)identifier fileGroup:(NSString *)group usingDiskEncryption:(BOOL)encrypt withCompletion:(SFSImageManagerCompletion)block
 {
-    [self fetchFileDataForRequest:request usingIdentifier:identifier fileGroup:group usingDiskEncryption:encrypt withCompletion:[self completionBlockWithImageBlock:block]];
+    return [self fetchFileDataForRequest:request usingIdentifier:identifier fileGroup:group usingDiskEncryption:encrypt withCompletion:[self completionBlockWithImageBlock:block]];
 }
 
 - (UIImage *)existingImageForIdentifier:(NSString *)identifier
