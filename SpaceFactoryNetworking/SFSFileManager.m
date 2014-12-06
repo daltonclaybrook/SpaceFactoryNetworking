@@ -130,6 +130,64 @@ static NSString * const kTaskMetadataFileName = @"taskMetadata";
     return [self urlForIdentifier:identifier group:fileGroup fileDescriptor:nil];
 }
 
+#pragma mark - File Storing
+
+- (void)storeData:(NSData *)data usingIdentifier:(NSString *)identifier
+{
+    [self storeData:data usingIdentifier:identifier inGroup:SFSFileManagerDefaultFileGroup];
+}
+
+- (void)storeData:(NSData *)data usingIdentifier:(NSString *)identifier inGroup:(NSString *)fileGroup
+{
+    [self storeData:data usingIdentifier:identifier inGroup:fileGroup usingDiskEncryption:self.usesEncryptionByDefault];
+}
+
+- (void)storeData:(NSData *)data usingIdentifier:(NSString *)identifier inGroup:(NSString *)fileGroup usingDiskEncryption:(BOOL)encrypt
+{
+    if (!data.length || !identifier.length || !fileGroup.length)
+    {
+        NSAssert(NO, @"One or more parameters are invalid: %@", NSStringFromSelector(_cmd));
+        return;
+    }
+    
+    SFSFileDescriptor *descriptor = nil;
+    NSURL *url = [self urlForIdentifier:identifier group:fileGroup fileDescriptor:&descriptor];
+    if (url)
+    {
+        NSError *error = nil;
+        [[NSFileManager defaultManager] removeItemAtPath:[url path] error:&error];
+        if (!error)
+        {
+            [self.fileManifest removeObject:descriptor];
+            
+            BOOL awaitingEncryption = (![self isProtectedDataAvailable] && encrypt);
+            NSDataWritingOptions options = (encrypt && !awaitingEncryption) ? NSDataWritingFileProtectionComplete : NSDataWritingFileProtectionNone;
+            NSString *groupToUse = (awaitingEncryption) ? SFSFileManagerUnprotectedFileGroup : fileGroup;
+            
+            NSUInteger component;
+            NSURL *newURL = [self createAvailableFileURLInFileGroup:groupToUse withComponent:&component];
+            
+            [data writeToURL:newURL options:options error:&error];
+            if (!error)
+            {
+                NSDictionary *attributes = [[NSFileManager defaultManager] attributesOfItemAtPath:[newURL path] error:nil];
+                
+                SFSFileDescriptor *descriptor = [[SFSFileDescriptor alloc] init];
+                descriptor.identifier = identifier;
+                descriptor.fileGroup = fileGroup;
+                descriptor.fileURLComponent = component;
+                descriptor.fileSize = attributes.fileSize;
+                descriptor.encrypted = encrypt;
+                descriptor.awaitingEncryption = awaitingEncryption;
+                descriptor.lastAccessDate = [NSDate date];
+                
+                [self.fileManifest addObject:descriptor];
+                [self saveManifest];
+            }
+        }
+    }
+}
+
 #pragma mark - Eviction
 
 - (void)evictFileForIdentifier:(NSString *)identifier

@@ -24,4 +24,8 @@ typedef void(^SFSImageManagerCompletion)(UIImage *image, NSError *error);
 - (UIImage *)existingImageForIdentifier:(NSString *)identifier;
 - (UIImage *)existingImageForIdentifier:(NSString *)identifier inGroup:(NSString *)fileGroup;
 
+- (void)storeImage:(UIImage *)image usingIdentifier:(NSString *)identifier;
+- (void)storeImage:(UIImage *)image usingIdentifier:(NSString *)identifier inGroup:(NSString *)fileGroup;
+- (void)storeImage:(UIImage *)image usingIdentifier:(NSString *)identifier inGroup:(NSString *)fileGroup usingDiskEncryption:(BOOL)encrypt;
+
 @end

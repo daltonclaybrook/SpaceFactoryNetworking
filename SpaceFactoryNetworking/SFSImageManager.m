@@ -51,6 +51,21 @@ NSString * const SFSImageManagerErrorDomain = @"SFSImageManagerErrorDomain";
     return [self imageFromFileURL:url error:nil];
 }
 
+- (void)storeImage:(UIImage *)image usingIdentifier:(NSString *)identifier
+{
+    [self storeData:UIImagePNGRepresentation(image) usingIdentifier:identifier];
+}
+
+- (void)storeImage:(UIImage *)image usingIdentifier:(NSString *)identifier inGroup:(NSString *)fileGroup
+{
+    [self storeData:UIImagePNGRepresentation(image) usingIdentifier:identifier inGroup:fileGroup];
+}
+
+- (void)storeImage:(UIImage *)image usingIdentifier:(NSString *)identifier inGroup:(NSString *)fileGroup usingDiskEncryption:(BOOL)encrypt
+{
+    [self storeData:UIImagePNGRepresentation(image) usingIdentifier:identifier inGroup:fileGroup usingDiskEncryption:encrypt];
+}
+
 #pragma mark - Private
 
 - (SFSFileManagerCompletion)completionBlockWithImageBlock:(SFSImageManagerCompletion)block

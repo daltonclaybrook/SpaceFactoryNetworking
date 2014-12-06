@@ -37,6 +37,10 @@ typedef void(^SFSFileManagerCompletion)(NSURL *fileURL, NSError *error);
 - (NSURL *)existingFileURLForIdentifier:(NSString *)identifier;
 - (NSURL *)existingFileURLForIdentifier:(NSString *)identifier inGroup:(NSString *)fileGroup;
 
+- (void)storeData:(NSData *)data usingIdentifier:(NSString *)identifier;
+- (void)storeData:(NSData *)data usingIdentifier:(NSString *)identifier inGroup:(NSString *)fileGroup;
+- (void)storeData:(NSData *)data usingIdentifier:(NSString *)identifier inGroup:(NSString *)fileGroup usingDiskEncryption:(BOOL)encrypt;
+
 - (void)evictFileForIdentifier:(NSString *)identifier;  // assumes default file group
 - (void)evictFileForIdentifier:(NSString *)identifier inGroup:(NSString *)fileGroup;
 - (void)evictAllFilesInGroup:(NSString *)fileGroup;
