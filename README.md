@@ -1,12 +1,8 @@
 # SpaceFactoryNetworking
 
-***
-
 A collection of classes useful for fetching and persisting file data. Built on top of **NSURLSession**.
 
 ## Features
-
-***
 
 - Download data directly to disk from an **NSURL** or **NSURLRequest**.
 - Files continue to download when the app is suspended.
@@ -23,8 +19,6 @@ A collection of classes useful for fetching and persisting file data. Built on t
 - **Image Manager** uses a **file manager** to fetch / persist image data specifically.
 
 ## Usage
-
-***
 
 Initialization & Configuration:
 
@@ -83,8 +77,6 @@ Image Manager:
     
 ## Integration
 
-*** 
-
 By far, the easiest way to integrate **SpaceFactoryNetworking** is using [CocoaPods](http://cocoapods.org):
 
     # Example Podfile
@@ -93,8 +85,6 @@ By far, the easiest way to integrate **SpaceFactoryNetworking** is using [CocoaP
 Otherwise, you can clone this repo, and import files from the **'SpaceFactoryNetworking/Core'** folder.
 
 ## Collaborate
-
-***
 
 You are welcome to submit pull requests to this project. If you are considering doing so, please reach out to me at [daltonclaybrook@gmail.com](mailto:daltonclaybrook@gmail.com). I'd like to touch base.
 
