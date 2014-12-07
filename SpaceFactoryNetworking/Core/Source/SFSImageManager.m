@@ -19,7 +19,7 @@ NSString * const SFSImageManagerErrorDomain = @"SFSImageManagerErrorDomain";
     self = [super init];
     if (self)
     {
-        _backingFileManager = fileManager;
+        _backingFileManager = (fileManager) ?: [[SFSFileManager alloc] init];
     }
     return self;
 }
