@@ -50,9 +50,9 @@ static NSString * const kVariableDataService = @"https://datautility.herokuapp.c
     if (!_imageManager)
     {
         _imageManager = [[SFSImageManager alloc] init];
-        _imageManager.usesEncryptionByDefault = YES;
+        _imageManager.backingFileManager.usesEncryptionByDefault = YES;
         
-        _imageManager.diskSizeLimit = 200000;
+//        _imageManager.backingFileManager.diskSizeLimit = 200000;
     }
     return _imageManager;
 }
@@ -70,7 +70,7 @@ static NSString * const kVariableDataService = @"https://datautility.herokuapp.c
 
 - (IBAction)evictButtonPressed:(id)sender
 {
-    [self.imageManager evictAllFiles];
+    [self.imageManager.backingFileManager evictAllFiles];
     self.imageView.image = nil;
     
     [self updateStatus:@"Eviction"];

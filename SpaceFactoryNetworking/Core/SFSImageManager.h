@@ -6,14 +6,18 @@
 //  Copyright (c) 2014 Space Factory Studios. All rights reserved.
 //
 
-#import "SFSFileManager.h"
 #import <UIKit/UIKit.h>
+#import "SFSFileManager.h"
 
 extern NSString * const SFSImageManagerErrorDomain;
 
 typedef void(^SFSImageManagerCompletion)(UIImage *image, NSError *error);
 
-@interface SFSImageManager : SFSFileManager
+@interface SFSImageManager : NSObject
+
+@property (nonatomic, strong, readonly) SFSFileManager *backingFileManager;
+
+- (instancetype)initWithFileManager:(SFSFileManager *)fileManager;
 
 - (id<SFSTask>)fetchImageAtURL:(NSURL *)url withCompletion:(SFSImageManagerCompletion)block;
 - (id<SFSTask>)fetchImageAtURL:(NSURL *)url usingIdentifier:(NSString *)identifier withCompletion:(SFSImageManagerCompletion)block;

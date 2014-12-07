@@ -7,7 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "SFSTaskMetadata.h"
+#import "SFSFileManagerConstants.h"
+#import "SFSTask.h"
 
 @interface SFSFileManager : NSObject
 
@@ -21,6 +22,12 @@
  */
 @property (nonatomic, assign) NSInteger diskSizeLimit;
 
+/*
+ *
+ *  Data Fetch Methods
+ *
+ */
+
 /**
  *  url absolute string is used as the identifier
  */
@@ -30,12 +37,30 @@
 - (id<SFSTask>)fetchFileDataAtURL:(NSURL *)url usingIdentifier:(NSString *)identifier fileGroup:(NSString *)group usingDiskEncryption:(BOOL)encrypt withCompletion:(SFSFileManagerCompletion)block;
 - (id<SFSTask>)fetchFileDataForRequest:(NSURLRequest *)request usingIdentifier:(NSString *)identifier fileGroup:(NSString *)group usingDiskEncryption:(BOOL)encrypt withCompletion:(SFSFileManagerCompletion)block;
 
+/*
+ *
+ *  Existing Data
+ *
+ */
+
 - (NSURL *)existingFileURLForIdentifier:(NSString *)identifier;
 - (NSURL *)existingFileURLForIdentifier:(NSString *)identifier inGroup:(NSString *)fileGroup;
+
+/*
+ *
+ *  Data Injection
+ *
+ */
 
 - (void)storeData:(NSData *)data usingIdentifier:(NSString *)identifier;
 - (void)storeData:(NSData *)data usingIdentifier:(NSString *)identifier inGroup:(NSString *)fileGroup;
 - (void)storeData:(NSData *)data usingIdentifier:(NSString *)identifier inGroup:(NSString *)fileGroup usingDiskEncryption:(BOOL)encrypt;
+
+/*
+ *
+ *  Data Eviction
+ *
+ */
 
 - (void)evictFileForIdentifier:(NSString *)identifier;  // assumes default file group
 - (void)evictFileForIdentifier:(NSString *)identifier inGroup:(NSString *)fileGroup save:(BOOL)save;

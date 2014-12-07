@@ -58,6 +58,7 @@
 		BE632D0F1A3248F100CE9121 /* SFSFileDescriptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFSFileDescriptor.m; sourceTree = "<group>"; };
 		BE632D111A325A1400CE9121 /* SFSTaskMetadata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFSTaskMetadata.h; sourceTree = "<group>"; };
 		BE632D121A325A1400CE9121 /* SFSTaskMetadata.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFSTaskMetadata.m; sourceTree = "<group>"; };
+		BED4E6D01A3403F6003350D6 /* SFSTask.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SFSTask.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -200,6 +201,7 @@
 		BE632D0A1A322C4C00CE9121 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				BED4E6CF1A3403E8003350D6 /* Protocols */,
 				750B3E831A32C6B90076BB0D /* Constants */,
 				BE632D0B1A322C6B00CE9121 /* SFSFileManager.h */,
 				BE632D0C1A322C6B00CE9121 /* SFSFileManager.m */,
@@ -211,6 +213,14 @@
 				BE632D121A325A1400CE9121 /* SFSTaskMetadata.m */,
 			);
 			path = Core;
+			sourceTree = "<group>";
+		};
+		BED4E6CF1A3403E8003350D6 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				BED4E6D01A3403F6003350D6 /* SFSTask.h */,
+			);
+			name = Protocols;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

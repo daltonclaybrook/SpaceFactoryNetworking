@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "SFSFileManager.h"
 #import "SFSFileDescriptor.h"
+#import "SFSTaskMetadata.h"
 
 static NSString * const SFSFileManagerRootDirectory = @"SFSFileManagerRootDirectory";
 

@@ -8,15 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "SFSFileManagerConstants.h"
-
-@protocol SFSTask <NSObject>
-
-@property (nonatomic, assign, readonly, getter=isRunning) BOOL running;
-
-- (void)cancelRequest;
-- (void)ignoreResults;
-
-@end
+#import "SFSTask.h"
 
 @interface SFSTaskMetadata : NSObject <NSCoding, SFSTask>
 
