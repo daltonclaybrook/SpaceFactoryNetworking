@@ -16,7 +16,7 @@ A collection of classes useful for fetching and persisting file data. Built on t
 - Ignore the results of a currently running fetch operation. This uninstalls the completion handler, but continues downloading the file.
 - If a fetch is in progress, and another fetch is initiated for the same resource, the second completion handler is installed on the currently running fetch, preventing duplicate data.
 - Inject existing data to be persisted by the file manager.
-- **Image Manager** uses a **file manager** to fetch / persist image data specifically.
+- **Image manager** uses a **file manager** to fetch / persist image data specifically.
 
 ## Usage
 
@@ -33,8 +33,6 @@ Simplest Fetch:
     
         // data fetched using '[url absoluteString]' as the identifier 
         // and 'SFSFileManagerDefaultFileGroup' as the file group
-        //
-        // 
     }];
     
 Complex Fetch:
@@ -47,7 +45,11 @@ Complex Fetch:
     NSString *myGroup = @"userDataGroup";
     
     __typeof__(self) __weak weakSelf = self;
-    id<SFSTask> task = [self.fileManager fetchFileDataForRequest:request usingIdentifier:myIdentifier fileGroup:myGroup usingDiskEncryption:YES withCompletion:^(NSURL *fileURL, NSError *error) {
+    id<SFSTask> task = [self.imageManager.backingFileManager fetchFileDataForRequest:request
+                                                                     usingIdentifier:myIdentifier
+                                                                           fileGroup:myGroup
+                                                                 usingDiskEncryption:YES
+                                                                      withCompletion:^(NSURL *fileURL, NSError *error) {
         
         [weakSelf useFileAtURL:fileURL error:error];
     }];
@@ -62,9 +64,9 @@ Complex Fetch:
     }
     
 Image Manager:
-
+    
+    // using 'nil' causes a file manager to be created for you.
     self.imageManager = [[SFSImageManager alloc] initWithFileManager:nil]; 
-    // causes a file manager to be created for you.
     
     NSURL *url = [NSURL URLWithString:@"http://placekitten/600/500"];
     
