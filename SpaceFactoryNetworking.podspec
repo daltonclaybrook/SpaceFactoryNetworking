@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "SpaceFactoryNetworking"
-  s.version      = "0.0.1"
+  s.version      = "0.0.2"
   s.summary      = "A networking library on top of NSURLSession"
   s.homepage     = "https://github.com/daltonclaybrook/SpaceFactoryNetworking"
   s.documentation_url = 'https://github.com/daltonclaybrook/SpaceFactoryNetworking/blob/0.0.1/README.md'

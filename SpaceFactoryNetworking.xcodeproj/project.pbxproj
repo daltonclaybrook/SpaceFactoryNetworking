@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		750B3E5E1A32A1230076BB0D /* SFSImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 750B3E5D1A32A1230076BB0D /* SFSImageManager.m */; };
 		750B3E861A32C6C80076BB0D /* SFSFileManagerConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 750B3E851A32C6C80076BB0D /* SFSFileManagerConstants.m */; };
+		751F5EBF1A3554F60027409C /* SFSFileFetchRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 751F5EBE1A3554F60027409C /* SFSFileFetchRequest.m */; };
 		75BF579E1A32FF3300C82F7D /* SFSActivityIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 75BF579D1A32FF3300C82F7D /* SFSActivityIndicatorView.m */; };
 		BE632CE71A322C3E00CE9121 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BE632CE61A322C3E00CE9121 /* main.m */; };
 		BE632CEA1A322C3E00CE9121 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BE632CE91A322C3E00CE9121 /* AppDelegate.m */; };
@@ -37,6 +38,8 @@
 		750B3E5D1A32A1230076BB0D /* SFSImageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFSImageManager.m; sourceTree = "<group>"; };
 		750B3E841A32C6C80076BB0D /* SFSFileManagerConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFSFileManagerConstants.h; sourceTree = "<group>"; };
 		750B3E851A32C6C80076BB0D /* SFSFileManagerConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFSFileManagerConstants.m; sourceTree = "<group>"; };
+		751F5EBD1A3554F60027409C /* SFSFileFetchRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFSFileFetchRequest.h; sourceTree = "<group>"; };
+		751F5EBE1A3554F60027409C /* SFSFileFetchRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFSFileFetchRequest.m; sourceTree = "<group>"; };
 		75BF579C1A32FF3300C82F7D /* SFSActivityIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFSActivityIndicatorView.h; sourceTree = "<group>"; };
 		75BF579D1A32FF3300C82F7D /* SFSActivityIndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFSActivityIndicatorView.m; sourceTree = "<group>"; };
 		BE632CE11A322C3E00CE9121 /* SpaceFactoryNetworking.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpaceFactoryNetworking.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -141,6 +144,7 @@
 				750B3E841A32C6C80076BB0D /* SFSFileManagerConstants.h */,
 				BE632D0B1A322C6B00CE9121 /* SFSFileManager.h */,
 				750B3E5C1A32A1230076BB0D /* SFSImageManager.h */,
+				751F5EBD1A3554F60027409C /* SFSFileFetchRequest.h */,
 			);
 			path = "Public Headers";
 			sourceTree = "<group>";
@@ -162,6 +166,7 @@
 				750B3E5D1A32A1230076BB0D /* SFSImageManager.m */,
 				BE632D0F1A3248F100CE9121 /* SFSFileDescriptor.m */,
 				BE632D121A325A1400CE9121 /* SFSTaskMetadata.m */,
+				751F5EBE1A3554F60027409C /* SFSFileFetchRequest.m */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -339,6 +344,7 @@
 				75BF579E1A32FF3300C82F7D /* SFSActivityIndicatorView.m in Sources */,
 				BE632D0D1A322C6B00CE9121 /* SFSFileManager.m in Sources */,
 				BE632D131A325A1400CE9121 /* SFSTaskMetadata.m in Sources */,
+				751F5EBF1A3554F60027409C /* SFSFileFetchRequest.m in Sources */,
 				BE632CE71A322C3E00CE9121 /* main.m in Sources */,
 				750B3E5E1A32A1230076BB0D /* SFSImageManager.m in Sources */,
 			);

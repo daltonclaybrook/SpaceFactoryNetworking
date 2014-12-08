@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "SFSFileManagerConstants.h"
+#import "SFSFileFetchRequest.h"
 #import "SFSTask.h"
 
 @interface SFSFileManager : NSObject
@@ -32,10 +33,7 @@
  *  url absolute string is used as the identifier
  */
 - (id<SFSTask>)fetchFileDataAtURL:(NSURL *)url withCompletion:(SFSFileManagerCompletion)block;
-- (id<SFSTask>)fetchFileDataAtURL:(NSURL *)url usingIdentifier:(NSString *)identifier withCompletion:(SFSFileManagerCompletion)block;
-- (id<SFSTask>)fetchFileDataAtURL:(NSURL *)url usingIdentifier:(NSString *)identifier fileGroup:(NSString *)group withCompletion:(SFSFileManagerCompletion)block;
-- (id<SFSTask>)fetchFileDataAtURL:(NSURL *)url usingIdentifier:(NSString *)identifier fileGroup:(NSString *)group usingDiskEncryption:(BOOL)encrypt withCompletion:(SFSFileManagerCompletion)block;
-- (id<SFSTask>)fetchFileDataForRequest:(NSURLRequest *)request usingIdentifier:(NSString *)identifier fileGroup:(NSString *)group usingDiskEncryption:(BOOL)encrypt withCompletion:(SFSFileManagerCompletion)block;
+- (id<SFSTask>)fetchFileDataUsingFetchRequest:(SFSFileFetchRequest *)request withCompletion:(SFSFileManagerCompletion)block;
 
 /*
  *

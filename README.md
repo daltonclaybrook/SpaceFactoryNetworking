@@ -12,6 +12,7 @@ A collection of classes useful for fetching and persisting file data. Built on t
 - Specify a disk size limit in bytes. If data on disk exceeds this limit, specific files are chosen and evicted using a combination of the file's **last access date** and **file size**.
 - Specify an **identifier** when fetching a file. This identifier can be used to check for the existence of a file on disk, or to evict a file.
 - Specify an optional **file group** for each file to associate it with other files.
+- Specify a **task priority** for a fetch.
 - Initiate a manual eviction of a file with an **identifier** and **file group**, evict all files in a **file group**, or evict the entire disk cache.
 - Ignore the results of a currently running fetch operation. This uninstalls the completion handler, but continues downloading the file.
 - If a fetch is in progress, and another fetch is initiated for the same resource, the second completion handler is installed on the currently running fetch, preventing duplicate data.
@@ -38,18 +39,18 @@ Simplest Fetch:
 Complex Fetch:
 
     NSURL *url = [NSURL URLWithString:@"http://myapi.com/users"];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [request setValue:<#auth string#> forHTTPHeaderField:@"Authorization"];
     
-    NSString *myIdentifier = @"12345";
-    NSString *myGroup = @"userDataGroup";
+    SFSFileFetchRequest *request = [SFSFileFetchRequest request];
+    request.urlRequest = urlRequest;
+    request.identifier = @"12345";
+    request.fileGroup = @"userDataGroup";
+    request.encryptionPolicy = SFSFileFetchRequestEncryptionPolicyUseEncryption;
+    request.taskPriority = SFSFileFetchRequestTaskPriorityHigh;
     
     __typeof__(self) __weak weakSelf = self;
-    id<SFSTask> task = [self.imageManager.backingFileManager fetchFileDataForRequest:request
-                                                                     usingIdentifier:myIdentifier
-                                                                           fileGroup:myGroup
-                                                                 usingDiskEncryption:YES
-                                                                      withCompletion:^(NSURL *fileURL, NSError *error) {
+    id<SFSTask> task = [self.fileManager fetchFileDataUsingFetchRequest:request withCompletion:^(NSURL *fileURL, NSError *error) {
         
         [weakSelf useFileAtURL:fileURL error:error];
     }];

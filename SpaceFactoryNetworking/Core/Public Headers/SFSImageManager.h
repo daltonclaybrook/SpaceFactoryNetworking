@@ -17,16 +17,35 @@ typedef void(^SFSImageManagerCompletion)(UIImage *image, NSError *error);
 
 @property (nonatomic, strong, readonly) SFSFileManager *backingFileManager;
 
+/**
+ *  if 'fileManager' is nil, one will be created.
+ */
 - (instancetype)initWithFileManager:(SFSFileManager *)fileManager;
 
-- (id<SFSTask>)fetchImageAtURL:(NSURL *)url withCompletion:(SFSImageManagerCompletion)block;
-- (id<SFSTask>)fetchImageAtURL:(NSURL *)url usingIdentifier:(NSString *)identifier withCompletion:(SFSImageManagerCompletion)block;
-- (id<SFSTask>)fetchImageAtURL:(NSURL *)url usingIdentifier:(NSString *)identifier fileGroup:(NSString *)group withCompletion:(SFSImageManagerCompletion)block;
-- (id<SFSTask>)fetchImageAtURL:(NSURL *)url usingIdentifier:(NSString *)identifier fileGroup:(NSString *)group usingDiskEncryption:(BOOL)encrypt withCompletion:(SFSImageManagerCompletion)block;
-- (id<SFSTask>)fetchImageForRequest:(NSURLRequest *)request usingIdentifier:(NSString *)identifier fileGroup:(NSString *)group usingDiskEncryption:(BOOL)encrypt withCompletion:(SFSImageManagerCompletion)block;
+/*
+ *
+ *  Fetch
+ *
+ */
 
+- (id<SFSTask>)fetchImageAtURL:(NSURL *)url withCompletion:(SFSImageManagerCompletion)block;
+- (id<SFSTask>)fetchImageUsingFetchRequest:(SFSFileFetchRequest *)request withCompletion:(SFSImageManagerCompletion)block;
+
+/*
+ *
+ *  Data
+ *
+ */
+
+- (UIImage *)existingImageForURL:(NSURL *)url;
 - (UIImage *)existingImageForIdentifier:(NSString *)identifier;
 - (UIImage *)existingImageForIdentifier:(NSString *)identifier inGroup:(NSString *)fileGroup;
+
+/*
+ *
+ *  Injection
+ *
+ */
 
 - (void)storeImage:(UIImage *)image usingIdentifier:(NSString *)identifier;
 - (void)storeImage:(UIImage *)image usingIdentifier:(NSString *)identifier inGroup:(NSString *)fileGroup;

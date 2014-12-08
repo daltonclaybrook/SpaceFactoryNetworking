@@ -79,36 +79,20 @@ static NSString * const kTaskMetadataFileName = @"taskMetadata";
 
 - (id<SFSTask>)fetchFileDataAtURL:(NSURL *)url withCompletion:(SFSFileManagerCompletion)block
 {
-    return [self fetchFileDataAtURL:url usingIdentifier:[url absoluteString] withCompletion:block];
+    return [self fetchFileDataUsingFetchRequest:[SFSFileFetchRequest defaultRequestWithURL:url] withCompletion:block];
 }
 
-- (id<SFSTask>)fetchFileDataAtURL:(NSURL *)url usingIdentifier:(NSString *)identifier withCompletion:(SFSFileManagerCompletion)block
+- (id<SFSTask>)fetchFileDataUsingFetchRequest:(SFSFileFetchRequest *)request withCompletion:(SFSFileManagerCompletion)block
 {
-    return [self fetchFileDataAtURL:url usingIdentifier:identifier fileGroup:SFSFileManagerDefaultFileGroup withCompletion:block];
-}
-
-- (id<SFSTask>)fetchFileDataAtURL:(NSURL *)url usingIdentifier:(NSString *)identifier fileGroup:(NSString *)group withCompletion:(SFSFileManagerCompletion)block
-{
-    return [self fetchFileDataAtURL:url usingIdentifier:identifier fileGroup:group usingDiskEncryption:self.usesEncryptionByDefault withCompletion:block];
-}
-
-- (id<SFSTask>)fetchFileDataAtURL:(NSURL *)url usingIdentifier:(NSString *)identifier fileGroup:(NSString *)group usingDiskEncryption:(BOOL)encrypt withCompletion:(SFSFileManagerCompletion)block
-{
-    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
-    return [self fetchFileDataForRequest:urlRequest usingIdentifier:identifier fileGroup:group usingDiskEncryption:encrypt withCompletion:block];
-}
-
-- (id<SFSTask>)fetchFileDataForRequest:(NSURLRequest *)request usingIdentifier:(NSString *)identifier fileGroup:(NSString *)group usingDiskEncryption:(BOOL)encrypt withCompletion:(SFSFileManagerCompletion)block
-{
-    if (!request || !identifier.length || !group.length)
+    if (!request.urlRequest || !request.identifier.length || !request.fileGroup.length)
     {
-        NSAssert(NO, @"One or more parameters are invalid: %@", NSStringFromSelector(_cmd));
+        NSAssert(NO, @"Request object was invalid: %@", NSStringFromSelector(_cmd));
         return nil;
     }
     
     id<SFSTask> returnTask = nil;
     SFSFileDescriptor *descriptor = nil;
-    NSURL *existingFile = [self urlForIdentifier:identifier group:group fileDescriptor:&descriptor];
+    NSURL *existingFile = [self urlForIdentifier:request.identifier group:request.fileGroup fileDescriptor:&descriptor];
     if (existingFile)
     {
         descriptor.lastAccessDate = [NSDate date];
@@ -119,12 +103,16 @@ static NSString * const kTaskMetadataFileName = @"taskMetadata";
     }
     else
     {
-        NSURLSessionDownloadTask *task = [self.urlSession downloadTaskWithRequest:request];
-        SFSTaskMetadata *metadata = [SFSTaskMetadata metadataForTaskIdentifier:task.taskIdentifier task:task fileIdentifier:identifier fileGroup:group encrypted:encrypt completion:block];
+        BOOL shouldEncrypt = [self shouldEncryptForPolicy:request.encryptionPolicy];
+        
+        NSURLSessionDownloadTask *task = [self.urlSession downloadTaskWithRequest:request.urlRequest];
+        [self updateTaskPriority:task usingPriority:request.taskPriority];
+        
+        SFSTaskMetadata *metadata = [SFSTaskMetadata metadataForTaskIdentifier:task.taskIdentifier task:task fileIdentifier:request.identifier fileGroup:request.fileGroup encrypted:shouldEncrypt completion:block];
         returnTask = metadata;
         
         __typeof__(self) __weak weakSelf = self;
-        [self checkIfFetchingURLRequest:request appendingCompletion:block withCompletion:^(BOOL currentlyFetching) {
+        [self checkIfFetchingURLRequest:request.urlRequest appendingCompletion:block withCompletion:^(BOOL currentlyFetching) {
             
             if (!currentlyFetching)
             {
@@ -399,6 +387,16 @@ static NSString * const kTaskMetadataFileName = @"taskMetadata";
     [self completeWithMetadata:metadata fileURL:((!error) ? newURL : nil) error:error];
 }
 
+- (void)updateTaskPriority:(NSURLSessionTask *)task usingPriority:(SFSFileFetchRequestTaskPriority)priority
+{
+#ifdef __IPHONE_8_0
+    if ([task respondsToSelector:@selector(setPriority:)])
+    {
+        task.priority = [self taskPriorityForPriority:priority];
+    }
+#endif
+}
+
 - (void)completeWithMetadata:(SFSTaskMetadata *)metadata fileURL:(NSURL *)url error:(NSError *)error
 {
     for (SFSFileManagerCompletion block in metadata.completionBlocks)
@@ -575,6 +573,44 @@ static NSString * const kTaskMetadataFileName = @"taskMetadata";
 - (BOOL)isProtectedDataAvailable
 {
     return [[UIApplication sharedApplication] isProtectedDataAvailable];
+}
+
+- (float)taskPriorityForPriority:(SFSFileFetchRequestTaskPriority)priority
+{
+    switch (priority)
+    {
+        case SFSFileFetchRequestTaskPriorityHigh:
+        {
+            return NSURLSessionTaskPriorityHigh;
+        }
+        case SFSFileFetchRequestTaskPriorityLow:
+        {
+            return NSURLSessionTaskPriorityLow;
+        }
+        default:
+        {
+            return NSURLSessionTaskPriorityDefault;
+        }
+    }
+}
+
+- (BOOL)shouldEncryptForPolicy:(SFSFileFetchRequestEncryptionPolicy)policy
+{
+    switch (policy)
+    {
+        case SFSFileFetchRequestEncryptionPolicyNoEncryption:
+        {
+            return NO;
+        }
+        case SFSFileFetchRequestEncryptionPolicyUseEncryption:
+        {
+            return YES;
+        }
+        default:
+        {
+            return self.usesEncryptionByDefault;
+        }
+    }
 }
 
 - (NSURL *)createAvailableFileURLInFileGroup:(NSString *)group withComponent:(out NSUInteger *)outComponent

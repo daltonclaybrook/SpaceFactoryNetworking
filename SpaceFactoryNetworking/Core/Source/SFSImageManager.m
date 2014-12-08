@@ -35,33 +35,23 @@ NSString * const SFSImageManagerErrorDomain = @"SFSImageManagerErrorDomain";
 }
 
 #pragma mark - Public
+#pragma mark - Fetch
 
 - (id<SFSTask>)fetchImageAtURL:(NSURL *)url withCompletion:(SFSImageManagerCompletion)block
 {
-    return [self fetchImageAtURL:url usingIdentifier:[url absoluteString] withCompletion:block];
+    return [self fetchImageUsingFetchRequest:[SFSFileFetchRequest defaultRequestWithURL:url] withCompletion:block];
 }
 
-- (id<SFSTask>)fetchImageAtURL:(NSURL *)url usingIdentifier:(NSString *)identifier withCompletion:(SFSImageManagerCompletion)block
+- (id<SFSTask>)fetchImageUsingFetchRequest:(SFSFileFetchRequest *)request withCompletion:(SFSImageManagerCompletion)block
 {
-    return [self fetchImageAtURL:url usingIdentifier:identifier fileGroup:SFSFileManagerDefaultFileGroup withCompletion:block];
+    return [self.backingFileManager fetchFileDataUsingFetchRequest:request withCompletion:[self completionBlockWithImageBlock:block identifier:request.identifier group:request.fileGroup]];
 }
 
-- (id<SFSTask>)fetchImageAtURL:(NSURL *)url usingIdentifier:(NSString *)identifier fileGroup:(NSString *)group withCompletion:(SFSImageManagerCompletion)block
-{
-    return [self fetchImageAtURL:url usingIdentifier:identifier fileGroup:group usingDiskEncryption:self.backingFileManager.usesEncryptionByDefault withCompletion:block];
-}
+#pragma mark - Existing Images
 
-- (id<SFSTask>)fetchImageAtURL:(NSURL *)url usingIdentifier:(NSString *)identifier fileGroup:(NSString *)group usingDiskEncryption:(BOOL)encrypt withCompletion:(SFSImageManagerCompletion)block
+- (UIImage *)existingImageForURL:(NSURL *)url
 {
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
-    return [self fetchImageForRequest:request usingIdentifier:identifier fileGroup:group usingDiskEncryption:encrypt withCompletion:block];
-}
-
-- (id<SFSTask>)fetchImageForRequest:(NSURLRequest *)request usingIdentifier:(NSString *)identifier fileGroup:(NSString *)group usingDiskEncryption:(BOOL)encrypt withCompletion:(SFSImageManagerCompletion)block
-{
-    SFSFileManagerCompletion fileBlock = [self completionBlockWithImageBlock:block identifier:identifier group:group];
-    
-    return [self.backingFileManager fetchFileDataForRequest:request usingIdentifier:identifier fileGroup:group usingDiskEncryption:encrypt withCompletion:fileBlock];
+    return [self existingImageForIdentifier:[url absoluteString]];
 }
 
 - (UIImage *)existingImageForIdentifier:(NSString *)identifier
@@ -75,6 +65,8 @@ NSString * const SFSImageManagerErrorDomain = @"SFSImageManagerErrorDomain";
     NSURL *url = [self.backingFileManager existingFileURLForIdentifier:identifier inGroup:fileGroup];
     return [self imageFromFileURL:url error:nil];
 }
+
+#pragma mark - Injection
 
 - (void)storeImage:(UIImage *)image usingIdentifier:(NSString *)identifier
 {
