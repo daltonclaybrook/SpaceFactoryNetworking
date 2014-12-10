@@ -52,7 +52,12 @@ static NSString * const kTaskMetadataFileName = @"taskMetadata";
         [self encryptUnprotectedFilesIfNecessary];
     }
     
-    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:kBackgroundSessionIdentifier];
+    NSURLSessionConfiguration *configuration;
+    if([NSURLSessionConfiguration respondsToSelector:@selector(backgroundSessionConfigurationWithIdentifier:)]) {
+        configuration = [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:kBackgroundSessionIdentifier];
+    } else {
+        configuration = [NSURLSessionConfiguration backgroundSessionConfiguration:kBackgroundSessionIdentifier];
+    }
     _urlSession = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
     
     [self cleanupTaskMetadata];
