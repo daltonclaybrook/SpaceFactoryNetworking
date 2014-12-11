@@ -34,12 +34,29 @@ static NSString * const kTaskMetadataFileName = @"taskMetadata";
     self = [super init];
     if (self)
     {
-        [self SFSFileManagerCommonInit];
+        NSURLSessionConfiguration *configuration;
+        if([NSURLSessionConfiguration respondsToSelector:@selector(backgroundSessionConfigurationWithIdentifier:)])
+        {
+            configuration = [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:kBackgroundSessionIdentifier];
+        } else {
+            configuration = [NSURLSessionConfiguration backgroundSessionConfiguration:kBackgroundSessionIdentifier];
+        }
+        
+        [self SFSFileManagerCommonInitWithConfiguration:configuration];
     }
     return self;
 }
 
-- (void)SFSFileManagerCommonInit
+- (instancetype) initWithConfiguration:(NSURLSessionConfiguration*)sessionConfiguration {
+    self = [super init];
+    if (self)
+    {
+        [self SFSFileManagerCommonInitWithConfiguration:sessionConfiguration];
+    }
+    return self;
+}
+
+- (void)SFSFileManagerCommonInitWithConfiguration:(NSURLSessionConfiguration*)configuration
 {
     _diskSizeLimit = SFSFileManagerNoDiskSizeLimit;
     
@@ -52,12 +69,6 @@ static NSString * const kTaskMetadataFileName = @"taskMetadata";
         [self encryptUnprotectedFilesIfNecessary];
     }
     
-    NSURLSessionConfiguration *configuration;
-    if([NSURLSessionConfiguration respondsToSelector:@selector(backgroundSessionConfigurationWithIdentifier:)]) {
-        configuration = [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:kBackgroundSessionIdentifier];
-    } else {
-        configuration = [NSURLSessionConfiguration backgroundSessionConfiguration:kBackgroundSessionIdentifier];
-    }
     _urlSession = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
     
     [self cleanupTaskMetadata];

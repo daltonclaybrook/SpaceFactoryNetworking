@@ -23,6 +23,8 @@
  */
 @property (nonatomic, assign) NSInteger diskSizeLimit;
 
+- (instancetype) initWithConfiguration:(NSURLSessionConfiguration*)sessionConfiguration;
+
 /*
  *
  *  Data Fetch Methods
