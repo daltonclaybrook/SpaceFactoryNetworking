@@ -12,7 +12,6 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = "7.0"
   s.source       = { :git => "https://github.com/daltonclaybrook/SpaceFactoryNetworking.git", :tag => s.version.to_s }
   s.source_files  = "SpaceFactoryNetworking/Core/**/*.{h,m}"
-  s.public_header_files = "SpaceFactoryNetworking/Core/Public Headers/**/*.h"
   s.requires_arc = true
 
 end

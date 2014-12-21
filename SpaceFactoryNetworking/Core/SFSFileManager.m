@@ -39,7 +39,10 @@ static NSString * const kTaskMetadataFileName = @"taskMetadata";
         {
             configuration = [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:kBackgroundSessionIdentifier];
         } else {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated"
             configuration = [NSURLSessionConfiguration backgroundSessionConfiguration:kBackgroundSessionIdentifier];
+#pragma clang diagnostic pop
         }
         
         [self SFSFileManagerCommonInitWithConfiguration:configuration];

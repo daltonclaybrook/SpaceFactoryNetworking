@@ -92,7 +92,7 @@ static NSString * const kVariableDataService = @"https://datautility.herokuapp.c
 {
     return @[ [NSURL URLWithString:@"https://placekitten.com/1050/1000"],
               [NSURL URLWithString:@"https://placekitten.com/1100/1000"],
-              [NSURL URLWithString:@"https://placekitten.com/1150/1000"],
+              [NSURL URLWithString:@"https://placekitten.com/1170/1000"],
               [NSURL URLWithString:@"https://placekitten.com/1200/1000"],
               [NSURL URLWithString:@"https://placekitten.com/1250/1000"],
               [NSURL URLWithString:@"https://placekitten.com/1300/1000"] ];

@@ -82,6 +82,73 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		75771F0C1A46B70A001D2402 /* File Manager */ = {
+			isa = PBXGroup;
+			children = (
+				75771F0E1A46B73D001D2402 /* Public */,
+				75771F101A46B764001D2402 /* Private */,
+			);
+			name = "File Manager";
+			sourceTree = "<group>";
+		};
+		75771F0D1A46B72E001D2402 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				BED4E6D01A3403F6003350D6 /* SFSTask.h */,
+			);
+			name = Protocols;
+			sourceTree = "<group>";
+		};
+		75771F0E1A46B73D001D2402 /* Public */ = {
+			isa = PBXGroup;
+			children = (
+				75771F0D1A46B72E001D2402 /* Protocols */,
+				75771F0F1A46B74B001D2402 /* Constants */,
+				BE632D0B1A322C6B00CE9121 /* SFSFileManager.h */,
+				BE632D0C1A322C6B00CE9121 /* SFSFileManager.m */,
+				750B3E5C1A32A1230076BB0D /* SFSImageManager.h */,
+				750B3E5D1A32A1230076BB0D /* SFSImageManager.m */,
+				751F5EBD1A3554F60027409C /* SFSFileFetchRequest.h */,
+				751F5EBE1A3554F60027409C /* SFSFileFetchRequest.m */,
+			);
+			name = Public;
+			sourceTree = "<group>";
+		};
+		75771F0F1A46B74B001D2402 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				750B3E841A32C6C80076BB0D /* SFSFileManagerConstants.h */,
+				750B3E851A32C6C80076BB0D /* SFSFileManagerConstants.m */,
+			);
+			name = Constants;
+			sourceTree = "<group>";
+		};
+		75771F101A46B764001D2402 /* Private */ = {
+			isa = PBXGroup;
+			children = (
+				BE632D0E1A3248F100CE9121 /* SFSFileDescriptor.h */,
+				BE632D0F1A3248F100CE9121 /* SFSFileDescriptor.m */,
+				BE632D111A325A1400CE9121 /* SFSTaskMetadata.h */,
+				BE632D121A325A1400CE9121 /* SFSTaskMetadata.m */,
+			);
+			name = Private;
+			sourceTree = "<group>";
+		};
+		75771F111A46B7B6001D2402 /* Data Manager */ = {
+			isa = PBXGroup;
+			children = (
+				75771F121A46B7C2001D2402 /* Public */,
+			);
+			name = "Data Manager";
+			sourceTree = "<group>";
+		};
+		75771F121A46B7C2001D2402 /* Public */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Public;
+			sourceTree = "<group>";
+		};
 		75BF57921A32F96000C82F7D /* Example */ = {
 			isa = PBXGroup;
 			children = (
@@ -135,40 +202,6 @@
 				75BF579B1A32FF2200C82F7D /* Views */,
 			);
 			name = Presentation;
-			sourceTree = "<group>";
-		};
-		75DF0BB91A340DE1009A1070 /* Public Headers */ = {
-			isa = PBXGroup;
-			children = (
-				BED4E6D01A3403F6003350D6 /* SFSTask.h */,
-				750B3E841A32C6C80076BB0D /* SFSFileManagerConstants.h */,
-				BE632D0B1A322C6B00CE9121 /* SFSFileManager.h */,
-				750B3E5C1A32A1230076BB0D /* SFSImageManager.h */,
-				751F5EBD1A3554F60027409C /* SFSFileFetchRequest.h */,
-			);
-			path = "Public Headers";
-			sourceTree = "<group>";
-		};
-		75DF0BBA1A340DEF009A1070 /* Private Headers */ = {
-			isa = PBXGroup;
-			children = (
-				BE632D0E1A3248F100CE9121 /* SFSFileDescriptor.h */,
-				BE632D111A325A1400CE9121 /* SFSTaskMetadata.h */,
-			);
-			path = "Private Headers";
-			sourceTree = "<group>";
-		};
-		75DF0BBB1A340DF5009A1070 /* Source */ = {
-			isa = PBXGroup;
-			children = (
-				750B3E851A32C6C80076BB0D /* SFSFileManagerConstants.m */,
-				BE632D0C1A322C6B00CE9121 /* SFSFileManager.m */,
-				750B3E5D1A32A1230076BB0D /* SFSImageManager.m */,
-				BE632D0F1A3248F100CE9121 /* SFSFileDescriptor.m */,
-				BE632D121A325A1400CE9121 /* SFSTaskMetadata.m */,
-				751F5EBE1A3554F60027409C /* SFSFileFetchRequest.m */,
-			);
-			path = Source;
 			sourceTree = "<group>";
 		};
 		BE632CD81A322C3E00CE9121 = {
@@ -229,9 +262,8 @@
 		BE632D0A1A322C4C00CE9121 /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				75DF0BB91A340DE1009A1070 /* Public Headers */,
-				75DF0BBA1A340DEF009A1070 /* Private Headers */,
-				75DF0BBB1A340DF5009A1070 /* Source */,
+				75771F111A46B7B6001D2402 /* Data Manager */,
+				75771F0C1A46B70A001D2402 /* File Manager */,
 			);
 			path = Core;
 			sourceTree = "<group>";
