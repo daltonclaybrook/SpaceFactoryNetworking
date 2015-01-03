@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "SFSFileManagerConstants.h"
+#import "SFSNetworkingConstants.h"
 #import "SFSFileFetchRequest.h"
 #import "SFSTask.h"
 
@@ -23,7 +23,7 @@
  */
 @property (nonatomic, assign) NSInteger diskSizeLimit;
 
-- (instancetype) initWithConfiguration:(NSURLSessionConfiguration*)sessionConfiguration;
+- (instancetype)initWithConfiguration:(NSURLSessionConfiguration *)sessionConfiguration;
 
 /*
  *

@@ -50,7 +50,8 @@ static NSString * const kTaskMetadataFileName = @"taskMetadata";
     return self;
 }
 
-- (instancetype) initWithConfiguration:(NSURLSessionConfiguration*)sessionConfiguration {
+- (instancetype)initWithConfiguration:(NSURLSessionConfiguration *)sessionConfiguration
+{
     self = [super init];
     if (self)
     {

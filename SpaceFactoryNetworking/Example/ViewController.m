@@ -63,6 +63,9 @@ static NSString * const kVariableDataService = @"https://datautility.herokuapp.c
 {
     [super viewDidLoad];
     
+    NSURLSessionConfiguration *defaultConfig = [NSURLSessionConfiguration defaultSessionConfiguration];
+    NSURLSessionConfiguration *downloadConfig = [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:@"abc"];
+    
     [self setupSegmentedControl];
 }
 

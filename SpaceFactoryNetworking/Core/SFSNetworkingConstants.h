@@ -12,3 +12,4 @@ extern NSInteger const SFSFileManagerNoDiskSizeLimit;
 extern NSString * const SFSFileManagerDefaultFileGroup;
 
 typedef void(^SFSFileManagerCompletion)(NSURL *fileURL, NSError *error);
+typedef void(^SFSDataManagerCompletion)(id response, NSError *error);

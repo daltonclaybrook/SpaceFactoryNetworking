@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Space Factory Studios. All rights reserved.
 //
 
-#import "SFSFileManagerConstants.h"
+#import "SFSNetworkingConstants.h"
 
 NSInteger const SFSFileManagerNoDiskSizeLimit = -1;
 NSString * const SFSFileManagerDefaultFileGroup = @"SFSFileManagerDefaultFileGroup";

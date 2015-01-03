@@ -7,7 +7,7 @@
 //
 
 #import "SFSFileFetchRequest.h"
-#import "SFSFileManagerConstants.h"
+#import "SFSNetworkingConstants.h"
 
 @implementation SFSFileFetchRequest
 

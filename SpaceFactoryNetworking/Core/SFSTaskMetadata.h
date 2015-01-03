@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "SFSFileManagerConstants.h"
+#import "SFSNetworkingConstants.h"
 #import "SFSTask.h"
 
 @interface SFSTaskMetadata : NSObject <NSCoding, SFSTask>

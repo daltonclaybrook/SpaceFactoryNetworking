@@ -8,8 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		750B3E5E1A32A1230076BB0D /* SFSImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 750B3E5D1A32A1230076BB0D /* SFSImageManager.m */; };
-		750B3E861A32C6C80076BB0D /* SFSFileManagerConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 750B3E851A32C6C80076BB0D /* SFSFileManagerConstants.m */; };
+		750B3E861A32C6C80076BB0D /* SFSNetworkingConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 750B3E851A32C6C80076BB0D /* SFSNetworkingConstants.m */; };
 		751F5EBF1A3554F60027409C /* SFSFileFetchRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 751F5EBE1A3554F60027409C /* SFSFileFetchRequest.m */; };
+		75786DBB1A4DE457003FAA3D /* SFSDataFetchRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 75786DBA1A4DE457003FAA3D /* SFSDataFetchRequest.m */; };
+		75786DBF1A4DE856003FAA3D /* SFSDataFetchTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 75786DBE1A4DE856003FAA3D /* SFSDataFetchTask.m */; };
+		75786DC61A4DED38003FAA3D /* SFSJSONSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 75786DC51A4DED38003FAA3D /* SFSJSONSerializer.m */; };
+		75786DC91A4DEF33003FAA3D /* SFSXMLSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 75786DC81A4DEF33003FAA3D /* SFSXMLSerializer.m */; };
+		758329461A47DFF0003AC343 /* SFSDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 758329451A47DFF0003AC343 /* SFSDataManager.m */; };
 		75BF579E1A32FF3300C82F7D /* SFSActivityIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 75BF579D1A32FF3300C82F7D /* SFSActivityIndicatorView.m */; };
 		BE632CE71A322C3E00CE9121 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BE632CE61A322C3E00CE9121 /* main.m */; };
 		BE632CEA1A322C3E00CE9121 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BE632CE91A322C3E00CE9121 /* AppDelegate.m */; };
@@ -36,10 +41,22 @@
 /* Begin PBXFileReference section */
 		750B3E5C1A32A1230076BB0D /* SFSImageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFSImageManager.h; sourceTree = "<group>"; };
 		750B3E5D1A32A1230076BB0D /* SFSImageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFSImageManager.m; sourceTree = "<group>"; };
-		750B3E841A32C6C80076BB0D /* SFSFileManagerConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFSFileManagerConstants.h; sourceTree = "<group>"; };
-		750B3E851A32C6C80076BB0D /* SFSFileManagerConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFSFileManagerConstants.m; sourceTree = "<group>"; };
+		750B3E841A32C6C80076BB0D /* SFSNetworkingConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFSNetworkingConstants.h; sourceTree = "<group>"; };
+		750B3E851A32C6C80076BB0D /* SFSNetworkingConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFSNetworkingConstants.m; sourceTree = "<group>"; };
 		751F5EBD1A3554F60027409C /* SFSFileFetchRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFSFileFetchRequest.h; sourceTree = "<group>"; };
 		751F5EBE1A3554F60027409C /* SFSFileFetchRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFSFileFetchRequest.m; sourceTree = "<group>"; };
+		75786DB91A4DE457003FAA3D /* SFSDataFetchRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFSDataFetchRequest.h; sourceTree = "<group>"; };
+		75786DBA1A4DE457003FAA3D /* SFSDataFetchRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFSDataFetchRequest.m; sourceTree = "<group>"; };
+		75786DBD1A4DE856003FAA3D /* SFSDataFetchTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFSDataFetchTask.h; sourceTree = "<group>"; };
+		75786DBE1A4DE856003FAA3D /* SFSDataFetchTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFSDataFetchTask.m; sourceTree = "<group>"; };
+		75786DC21A4DEC5D003FAA3D /* SFSRequestSerialization.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SFSRequestSerialization.h; sourceTree = "<group>"; };
+		75786DC31A4DEC6E003FAA3D /* SFSResponseSerialization.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SFSResponseSerialization.h; sourceTree = "<group>"; };
+		75786DC41A4DED38003FAA3D /* SFSJSONSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFSJSONSerializer.h; sourceTree = "<group>"; };
+		75786DC51A4DED38003FAA3D /* SFSJSONSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFSJSONSerializer.m; sourceTree = "<group>"; };
+		75786DC71A4DEF33003FAA3D /* SFSXMLSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFSXMLSerializer.h; sourceTree = "<group>"; };
+		75786DC81A4DEF33003FAA3D /* SFSXMLSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFSXMLSerializer.m; sourceTree = "<group>"; };
+		758329441A47DFF0003AC343 /* SFSDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFSDataManager.h; sourceTree = "<group>"; };
+		758329451A47DFF0003AC343 /* SFSDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFSDataManager.m; sourceTree = "<group>"; };
 		75BF579C1A32FF3300C82F7D /* SFSActivityIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFSActivityIndicatorView.h; sourceTree = "<group>"; };
 		75BF579D1A32FF3300C82F7D /* SFSActivityIndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFSActivityIndicatorView.m; sourceTree = "<group>"; };
 		BE632CE11A322C3E00CE9121 /* SpaceFactoryNetworking.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpaceFactoryNetworking.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -95,6 +112,8 @@
 			isa = PBXGroup;
 			children = (
 				BED4E6D01A3403F6003350D6 /* SFSTask.h */,
+				75786DC21A4DEC5D003FAA3D /* SFSRequestSerialization.h */,
+				75786DC31A4DEC6E003FAA3D /* SFSResponseSerialization.h */,
 			);
 			name = Protocols;
 			sourceTree = "<group>";
@@ -102,8 +121,6 @@
 		75771F0E1A46B73D001D2402 /* Public */ = {
 			isa = PBXGroup;
 			children = (
-				75771F0D1A46B72E001D2402 /* Protocols */,
-				75771F0F1A46B74B001D2402 /* Constants */,
 				BE632D0B1A322C6B00CE9121 /* SFSFileManager.h */,
 				BE632D0C1A322C6B00CE9121 /* SFSFileManager.m */,
 				750B3E5C1A32A1230076BB0D /* SFSImageManager.h */,
@@ -117,8 +134,8 @@
 		75771F0F1A46B74B001D2402 /* Constants */ = {
 			isa = PBXGroup;
 			children = (
-				750B3E841A32C6C80076BB0D /* SFSFileManagerConstants.h */,
-				750B3E851A32C6C80076BB0D /* SFSFileManagerConstants.m */,
+				750B3E841A32C6C80076BB0D /* SFSNetworkingConstants.h */,
+				750B3E851A32C6C80076BB0D /* SFSNetworkingConstants.m */,
 			);
 			name = Constants;
 			sourceTree = "<group>";
@@ -138,6 +155,7 @@
 			isa = PBXGroup;
 			children = (
 				75771F121A46B7C2001D2402 /* Public */,
+				75786DBC1A4DE83D003FAA3D /* Private */,
 			);
 			name = "Data Manager";
 			sourceTree = "<group>";
@@ -145,8 +163,33 @@
 		75771F121A46B7C2001D2402 /* Public */ = {
 			isa = PBXGroup;
 			children = (
+				75786DC11A4DEC1A003FAA3D /* Serialization */,
+				758329441A47DFF0003AC343 /* SFSDataManager.h */,
+				758329451A47DFF0003AC343 /* SFSDataManager.m */,
+				75786DB91A4DE457003FAA3D /* SFSDataFetchRequest.h */,
+				75786DBA1A4DE457003FAA3D /* SFSDataFetchRequest.m */,
+				75786DC41A4DED38003FAA3D /* SFSJSONSerializer.h */,
+				75786DC51A4DED38003FAA3D /* SFSJSONSerializer.m */,
+				75786DC71A4DEF33003FAA3D /* SFSXMLSerializer.h */,
+				75786DC81A4DEF33003FAA3D /* SFSXMLSerializer.m */,
 			);
 			name = Public;
+			sourceTree = "<group>";
+		};
+		75786DBC1A4DE83D003FAA3D /* Private */ = {
+			isa = PBXGroup;
+			children = (
+				75786DBD1A4DE856003FAA3D /* SFSDataFetchTask.h */,
+				75786DBE1A4DE856003FAA3D /* SFSDataFetchTask.m */,
+			);
+			name = Private;
+			sourceTree = "<group>";
+		};
+		75786DC11A4DEC1A003FAA3D /* Serialization */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Serialization;
 			sourceTree = "<group>";
 		};
 		75BF57921A32F96000C82F7D /* Example */ = {
@@ -262,6 +305,8 @@
 		BE632D0A1A322C4C00CE9121 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				75771F0D1A46B72E001D2402 /* Protocols */,
+				75771F0F1A46B74B001D2402 /* Constants */,
 				75771F111A46B7B6001D2402 /* Data Manager */,
 				75771F0C1A46B70A001D2402 /* File Manager */,
 			);
@@ -369,13 +414,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				750B3E861A32C6C80076BB0D /* SFSFileManagerConstants.m in Sources */,
+				750B3E861A32C6C80076BB0D /* SFSNetworkingConstants.m in Sources */,
 				BE632CED1A322C3E00CE9121 /* ViewController.m in Sources */,
 				BE632D101A3248F100CE9121 /* SFSFileDescriptor.m in Sources */,
 				BE632CEA1A322C3E00CE9121 /* AppDelegate.m in Sources */,
+				75786DC91A4DEF33003FAA3D /* SFSXMLSerializer.m in Sources */,
+				75786DBF1A4DE856003FAA3D /* SFSDataFetchTask.m in Sources */,
+				758329461A47DFF0003AC343 /* SFSDataManager.m in Sources */,
+				75786DBB1A4DE457003FAA3D /* SFSDataFetchRequest.m in Sources */,
 				75BF579E1A32FF3300C82F7D /* SFSActivityIndicatorView.m in Sources */,
 				BE632D0D1A322C6B00CE9121 /* SFSFileManager.m in Sources */,
 				BE632D131A325A1400CE9121 /* SFSTaskMetadata.m in Sources */,
+				75786DC61A4DED38003FAA3D /* SFSJSONSerializer.m in Sources */,
 				751F5EBF1A3554F60027409C /* SFSFileFetchRequest.m in Sources */,
 				BE632CE71A322C3E00CE9121 /* main.m in Sources */,
 				750B3E5E1A32A1230076BB0D /* SFSImageManager.m in Sources */,
