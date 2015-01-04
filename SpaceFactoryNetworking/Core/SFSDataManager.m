@@ -8,11 +8,13 @@
 
 #import "SFSDataManager.h"
 #import "SFSDataFetchTask.h"
+#import "SFSURLRequestFactory.h"
 
 @interface SFSDataManager () <NSURLSessionDataDelegate>
 
 @property (nonatomic, strong) NSURLSession *urlSession;
 @property (nonatomic, strong) NSMutableDictionary *requestMappings;
+@property (nonatomic, strong) SFSURLRequestFactory *urlRequestFactory;
 
 @end
 
@@ -46,6 +48,8 @@
     NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
     _urlSession = [NSURLSession sessionWithConfiguration:config delegate:self delegateQueue:nil];
     _requestMappings = [NSMutableDictionary dictionary];
+    
+    _urlRequestFactory = [[SFSURLRequestFactory alloc] init];
 }
 
 #pragma mark - Public
@@ -59,7 +63,7 @@
 
 - (id<SFSTask>)fetchDataUsingFetchRequest:(SFSDataFetchRequest *)request completion:(SFSDataManagerCompletion)block
 {
-    NSURLRequest *urlRequest = [self urlRequestFromFetchRequest:request];
+    NSURLRequest *urlRequest = [self.urlRequestFactory urlRequestFromFetchRequest:request baseURL:self.baseURL usingSerializer:self.requestSerializer];
     
     return [self fetchDataUsingURLRequest:urlRequest completion:block];
 }
@@ -79,76 +83,6 @@
     [task resume];
     
     return fetchTask;
-}
-
-#pragma mark - Helper Methods
-
-- (NSURLRequest *)urlRequestFromFetchRequest:(SFSDataFetchRequest *)request
-{
-    NSString *fullPath = [self.baseURL.absoluteString stringByAppendingPathComponent:request.path];
-    NSURL *url = [NSURL URLWithString:fullPath];
-    NSMutableURLRequest *urlRequest = nil;
-    
-    if (url)
-    {
-        urlRequest = [[NSMutableURLRequest alloc] initWithURL:url];
-        urlRequest.HTTPMethod = [self HTTPMethodFromDataRequestMethod:request.method];
-        urlRequest.HTTPBody = [self HTTPBodyDataFromObjectIfNecessary:request.object];
-    }
-    
-    return [urlRequest copy];
-}
-
-- (NSString *)HTTPMethodFromDataRequestMethod:(SFSDataRequestMethod)method
-{
-    switch (method)
-    {
-        case SFSDataRequestMethodGET:
-            return @"GET";
-        case SFSDataRequestMethodPOST:
-            return @"POST";
-        case SFSDataRequestMethodDELETE:
-            return @"DELETE";
-        case SFSDataRequestMethodHEAD:
-            return @"HEAD";
-        case SFSDataRequestMethodPATCH:
-            return @"PATCH";
-        case SFSDataRequestMethodPUT:
-            return @"PUT";
-        default:
-        {
-            NSAssert(NO, @"%li is not a valid method", method);
-            return nil;
-        }
-    }
-}
-
-- (NSData *)HTTPBodyDataFromObjectIfNecessary:(id)object
-{
-    NSData *data = nil;
-    if (object)
-    {
-        if (self.requestSerializer)
-        {
-            if ([self.requestSerializer canSerializeObject:object])
-            {
-                data = [self.requestSerializer bodyDataFromObject:object];
-            }
-            else
-            {
-                NSAssert(NO, @"Serializer %@ cannot serialize object %@", self.requestSerializer, object);
-            }
-        }
-        else if ([object isKindOfClass:[NSData class]])
-        {
-            data = object;
-        }
-        else
-        {
-            NSAssert(NO, @"No request serializer exists and object %@ is not NSData", object);
-        }
-    }
-    return data;
 }
 
 // Consider implementing method to upgrade data tasks to download tasks

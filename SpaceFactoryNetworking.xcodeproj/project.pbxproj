@@ -10,6 +10,7 @@
 		750B3E5E1A32A1230076BB0D /* SFSImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 750B3E5D1A32A1230076BB0D /* SFSImageManager.m */; };
 		750B3E861A32C6C80076BB0D /* SFSNetworkingConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 750B3E851A32C6C80076BB0D /* SFSNetworkingConstants.m */; };
 		751F5EBF1A3554F60027409C /* SFSFileFetchRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 751F5EBE1A3554F60027409C /* SFSFileFetchRequest.m */; };
+		753DF58B1A578F5300961990 /* SFSURLRequestFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 753DF58A1A578F5300961990 /* SFSURLRequestFactory.m */; };
 		75786DBB1A4DE457003FAA3D /* SFSDataFetchRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 75786DBA1A4DE457003FAA3D /* SFSDataFetchRequest.m */; };
 		75786DBF1A4DE856003FAA3D /* SFSDataFetchTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 75786DBE1A4DE856003FAA3D /* SFSDataFetchTask.m */; };
 		75786DC61A4DED38003FAA3D /* SFSJSONSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 75786DC51A4DED38003FAA3D /* SFSJSONSerializer.m */; };
@@ -45,6 +46,8 @@
 		750B3E851A32C6C80076BB0D /* SFSNetworkingConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFSNetworkingConstants.m; sourceTree = "<group>"; };
 		751F5EBD1A3554F60027409C /* SFSFileFetchRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFSFileFetchRequest.h; sourceTree = "<group>"; };
 		751F5EBE1A3554F60027409C /* SFSFileFetchRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFSFileFetchRequest.m; sourceTree = "<group>"; };
+		753DF5891A578F5300961990 /* SFSURLRequestFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFSURLRequestFactory.h; sourceTree = "<group>"; };
+		753DF58A1A578F5300961990 /* SFSURLRequestFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFSURLRequestFactory.m; sourceTree = "<group>"; };
 		75786DB91A4DE457003FAA3D /* SFSDataFetchRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFSDataFetchRequest.h; sourceTree = "<group>"; };
 		75786DBA1A4DE457003FAA3D /* SFSDataFetchRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFSDataFetchRequest.m; sourceTree = "<group>"; };
 		75786DBD1A4DE856003FAA3D /* SFSDataFetchTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFSDataFetchTask.h; sourceTree = "<group>"; };
@@ -181,6 +184,8 @@
 			children = (
 				75786DBD1A4DE856003FAA3D /* SFSDataFetchTask.h */,
 				75786DBE1A4DE856003FAA3D /* SFSDataFetchTask.m */,
+				753DF5891A578F5300961990 /* SFSURLRequestFactory.h */,
+				753DF58A1A578F5300961990 /* SFSURLRequestFactory.m */,
 			);
 			name = Private;
 			sourceTree = "<group>";
@@ -415,6 +420,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				750B3E861A32C6C80076BB0D /* SFSNetworkingConstants.m in Sources */,
+				753DF58B1A578F5300961990 /* SFSURLRequestFactory.m in Sources */,
 				BE632CED1A322C3E00CE9121 /* ViewController.m in Sources */,
 				BE632D101A3248F100CE9121 /* SFSFileDescriptor.m in Sources */,
 				BE632CEA1A322C3E00CE9121 /* AppDelegate.m in Sources */,
