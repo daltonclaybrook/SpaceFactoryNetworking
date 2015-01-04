@@ -10,6 +10,8 @@
 #import "SFSDataFetchTask.h"
 #import "SFSURLRequestFactory.h"
 
+static NSString * const kContentTypeKey = @"Content-Type";
+
 @interface SFSDataManager () <NSURLSessionDataDelegate>
 
 @property (nonatomic, strong) NSURLSession *urlSession;
@@ -76,13 +78,33 @@
         return nil;
     }
     
-    NSURLSessionDataTask *task = [self.urlSession dataTaskWithRequest:request];
+    NSURLRequest *newReqest = [self requestByAddingContentTypeToRequestIfNecessary:request];
+    NSURLSessionDataTask *task = [self.urlSession dataTaskWithRequest:newReqest];
     SFSDataFetchTask *fetchTask = [SFSDataFetchTask taskWithSessionTask:task completion:block];
     
     self.requestMappings[task] = fetchTask;
     [task resume];
     
     return fetchTask;
+}
+
+#pragma mark - Private
+
+- (NSURLRequest *)requestByAddingContentTypeToRequestIfNecessary:(NSURLRequest *)request
+{
+    NSMutableURLRequest *mutableRequest = [request mutableCopy];
+    NSString *value = [mutableRequest valueForHTTPHeaderField:kContentTypeKey];
+    
+    if (!value.length && self.requestSerializer)
+    {
+        NSString *contentType = [self.requestSerializer contentType];
+        if (contentType.length)
+        {
+            [mutableRequest setValue:contentType forHTTPHeaderField:contentType];
+        }
+    }
+    
+    return [mutableRequest copy];
 }
 
 // Consider implementing method to upgrade data tasks to download tasks

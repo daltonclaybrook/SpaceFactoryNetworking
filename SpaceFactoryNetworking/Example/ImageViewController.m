@@ -6,13 +6,11 @@
 //  Copyright (c) 2014 Space Factory Studios. All rights reserved.
 //
 
-#import "ViewController.h"
+#import "ImageViewController.h"
 #import "SFSFileManager.h"
 #import "SFSImageManager.h"
 
-static NSString * const kVariableDataService = @"https://datautility.herokuapp.com/jibberishblob/ofsize/%lu";
-
-@interface ViewController ()
+@interface ImageViewController ()
 
 @property (nonatomic, strong) SFSFileManager *fileManager;
 @property (nonatomic, strong) SFSImageManager *imageManager;
@@ -22,49 +20,20 @@ static NSString * const kVariableDataService = @"https://datautility.herokuapp.c
 
 @end
 
-@implementation ViewController
-
-#pragma mark - Accessors
-
-- (NSArray *)imageURLs
-{
-    if (!_imageURLs)
-    {
-        _imageURLs = [self createImageURLs];
-    }
-    return _imageURLs;
-}
-
-- (SFSFileManager *)fileManager
-{
-    if (!_fileManager)
-    {
-        _fileManager = [[SFSFileManager alloc] init];
-        _fileManager.usesEncryptionByDefault = NO;
-    }
-    return _fileManager;
-}
-
-- (SFSImageManager *)imageManager
-{
-    if (!_imageManager)
-    {
-        _imageManager = [[SFSImageManager alloc] init];
-        _imageManager.backingFileManager.usesEncryptionByDefault = YES;
-        
-//        _imageManager.backingFileManager.diskSizeLimit = 200000;
-    }
-    return _imageManager;
-}
+@implementation ImageViewController
 
 #pragma mark - UIViewController
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.imageURLs = [self createImageURLs];
     
-    NSURLSessionConfiguration *defaultConfig = [NSURLSessionConfiguration defaultSessionConfiguration];
-    NSURLSessionConfiguration *downloadConfig = [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:@"abc"];
+    self.imageManager = [[SFSImageManager alloc] init];
+    self.imageManager.backingFileManager.usesEncryptionByDefault = YES;
+    
+    self.fileManager = [[SFSFileManager alloc] init];
+    self.fileManager.usesEncryptionByDefault = NO;
     
     [self setupSegmentedControl];
 }

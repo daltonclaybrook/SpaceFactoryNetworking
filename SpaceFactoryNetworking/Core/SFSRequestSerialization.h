@@ -10,6 +10,8 @@
 
 @protocol SFSRequestSerialization <NSObject>
 
+@property (nonatomic, readonly) NSString *contentType;
+
 - (BOOL)canSerializeObject:(id)object;
 
 /**

@@ -12,6 +12,11 @@
 
 #pragma mark - SFSRequestSerialization
 
+- (NSString *)contentType
+{
+    return @"application/json";
+}
+
 - (BOOL)canSerializeObject:(id)object
 {
     return [NSJSONSerialization isValidJSONObject:object];
