@@ -9,6 +9,7 @@
 #import "SFSFormDataSerializer.h"
 
 static NSUInteger const kBoundaryLength = 16;
+static NSUInteger const kFileNameLength = 16;
 static NSString * const kNewlineString = @"\r\n";
 
 @interface SFSFormDataSerializer ()
@@ -55,7 +56,8 @@ static NSString * const kNewlineString = @"\r\n";
         {
             NSString *value = dict[key];
             if (![key isKindOfClass:[NSString class]] ||
-                ![value isKindOfClass:[NSString class]])
+                (![value isKindOfClass:[NSString class]] ||
+                 ![value isKindOfClass:[UIImage class]]))
             {
                 canSerialize = NO;
                 break;
@@ -79,7 +81,7 @@ static NSString * const kNewlineString = @"\r\n";
     [self addBoundaryToData:formData];
     for (NSString *key in [dict keyEnumerator])
     {
-        NSString *value = dict[key];
+        id value = dict[key];
         [self addKey:key value:value toData:formData];
         [self addBoundaryToData:formData];
     }
@@ -95,23 +97,43 @@ static NSString * const kNewlineString = @"\r\n";
     [data appendData:[string dataUsingEncoding:NSUTF8StringEncoding]];
 }
 
-- (void)addKey:(NSString *)key value:(NSString *)value toData:(NSMutableData *)data
+- (void)addKey:(NSString *)key value:(id)value toData:(NSMutableData *)data
 {
+#warning fix this for images
     NSMutableString *string = [NSMutableString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n%@", key, value];
+ 
+    NSString *suffix = @"";
+    if (![value isKindOfClass:[NSString class]])
+    {
+        suffix = [NSString stringWithFormat:@"; filename=\"%@.png\"\r\nContent-Type: image/png\r\n\r\n", [self createRandomStringForImageName]];
+    }
     
+    [string appendString:suffix];
     [data appendData:[string dataUsingEncoding:NSUTF8StringEncoding]];
 }
 
 - (NSString *)createBoundaryString
 {
     NSString *characters = @"0123456789abcdef";
-    NSMutableString *boundarySuffix = [NSMutableString string];
-    for (NSUInteger i=0; i<kBoundaryLength; i++)
+    NSString *boundarySuffix = [self randomStringUsingCharacters:characters length:kBoundaryLength];
+    return [@"SFSNetworing--" stringByAppendingString:boundarySuffix];
+}
+
+- (NSString *)createRandomStringForImageName
+{
+    NSString *characters = @"0123456789abcdefghijklmnopqrstuvwxyz";
+    return [self randomStringUsingCharacters:characters length:kFileNameLength];
+}
+
+- (NSString *)randomStringUsingCharacters:(NSString *)characters length:(NSUInteger)length
+{
+    NSMutableString *string = [NSMutableString string];
+    for (NSUInteger i=0; i<length; i++)
     {
         NSUInteger index = arc4random_uniform((u_int32_t)characters.length);
-        [boundarySuffix appendString:[characters substringWithRange:NSMakeRange(index, 1)]];
+        [string appendString:[characters substringWithRange:NSMakeRange(index, 1)]];
     }
-    return [@"SFSNetworing--" stringByAppendingString:boundarySuffix];
+    return [string copy];
 }
 
 @end

@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Space Factory Studios. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 #import "SFSRequestSerialization.h"
 
 @interface SFSFormDataSerializer : NSObject <SFSRequestSerialization>

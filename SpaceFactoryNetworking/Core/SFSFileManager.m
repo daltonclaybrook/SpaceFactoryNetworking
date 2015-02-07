@@ -164,6 +164,7 @@ static NSString * const kTaskMetadataFileName = @"taskMetadata";
     SFSFileDescriptor *descriptor = nil;
     NSURL *url = [self urlForIdentifier:identifier group:fileGroup fileDescriptor:&descriptor];
     descriptor.lastAccessDate = [NSDate date];
+#warning this call can take time. consider saving it less frequently.
     [self saveManifest];
     
     return url;
@@ -193,38 +194,37 @@ static NSString * const kTaskMetadataFileName = @"taskMetadata";
     NSURL *url = [self urlForIdentifier:identifier group:fileGroup fileDescriptor:&descriptor];
     if (url)
     {
-        NSError *error = nil;
-        [[NSFileManager defaultManager] removeItemAtPath:[url path] error:&error];
-        if (!error)
-        {
-            [self.fileManifest removeObject:descriptor];
-            
-            BOOL awaitingEncryption = (![self isProtectedDataAvailable] && encrypt);
-            NSDataWritingOptions options = (encrypt && !awaitingEncryption) ? NSDataWritingFileProtectionComplete : NSDataWritingFileProtectionNone;
-            NSString *groupToUse = (awaitingEncryption) ? SFSFileManagerUnprotectedFileGroup : fileGroup;
-            
-            NSUInteger component;
-            NSURL *newURL = [self createAvailableFileURLInFileGroup:groupToUse withComponent:&component];
-            
-            [data writeToURL:newURL options:options error:&error];
-            if (!error)
-            {
-                [self evaluateDiskSizeLimit];
-                NSDictionary *attributes = [[NSFileManager defaultManager] attributesOfItemAtPath:[newURL path] error:nil];
-                
-                SFSFileDescriptor *descriptor = [[SFSFileDescriptor alloc] init];
-                descriptor.identifier = identifier;
-                descriptor.fileGroup = fileGroup;
-                descriptor.fileURLComponent = component;
-                descriptor.fileSize = attributes.fileSize;
-                descriptor.encrypted = encrypt;
-                descriptor.awaitingEncryption = awaitingEncryption;
-                descriptor.lastAccessDate = [NSDate date];
-                
-                [self.fileManifest addObject:descriptor];
-                [self saveManifest];
-            }
-        }
+        [[NSFileManager defaultManager] removeItemAtPath:[url path] error:nil];
+        [self.fileManifest removeObject:descriptor];
+    }
+    
+    BOOL awaitingEncryption = (![self isProtectedDataAvailable] && encrypt);
+    NSDataWritingOptions options = (encrypt && !awaitingEncryption) ? NSDataWritingFileProtectionComplete : NSDataWritingFileProtectionNone;
+    NSString *groupToUse = (awaitingEncryption) ? SFSFileManagerUnprotectedFileGroup : fileGroup;
+    
+    [self createDirectoryForGroupIfNecessary:groupToUse];
+    
+    NSUInteger component;
+    NSURL *newURL = [self createAvailableFileURLInFileGroup:groupToUse withComponent:&component];
+    
+    NSError *error = nil;
+    [data writeToURL:newURL options:options error:&error];
+    if (!error)
+    {
+        [self evaluateDiskSizeLimit];
+        NSDictionary *attributes = [[NSFileManager defaultManager] attributesOfItemAtPath:[newURL path] error:nil];
+        
+        SFSFileDescriptor *descriptor = [[SFSFileDescriptor alloc] init];
+        descriptor.identifier = identifier;
+        descriptor.fileGroup = fileGroup;
+        descriptor.fileURLComponent = component;
+        descriptor.fileSize = attributes.fileSize;
+        descriptor.encrypted = encrypt;
+        descriptor.awaitingEncryption = awaitingEncryption;
+        descriptor.lastAccessDate = [NSDate date];
+        
+        [self.fileManifest addObject:descriptor];
+        [self saveManifest];
     }
 }
 

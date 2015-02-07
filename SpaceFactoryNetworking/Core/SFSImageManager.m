@@ -10,6 +10,12 @@
 
 NSString * const SFSImageManagerErrorDomain = @"SFSImageManagerErrorDomain";
 
+@interface SFSImageManager ()
+
+@property (nonatomic, strong) dispatch_queue_t backgroundQueue;
+
+@end
+
 @implementation SFSImageManager
 
 #pragma mark - Initializers
@@ -20,6 +26,7 @@ NSString * const SFSImageManagerErrorDomain = @"SFSImageManagerErrorDomain";
     if (self)
     {
         _backingFileManager = (fileManager) ?: [[SFSFileManager alloc] init];
+        [self SFSImageManagerCommonInit];
     }
     return self;
 }
@@ -30,8 +37,14 @@ NSString * const SFSImageManagerErrorDomain = @"SFSImageManagerErrorDomain";
     if (self)
     {
         _backingFileManager = [[SFSFileManager alloc] init];
+        [self SFSImageManagerCommonInit];
     }
     return self;
+}
+
+- (void)SFSImageManagerCommonInit
+{
+    _backgroundQueue = dispatch_queue_create(NULL, NULL);
 }
 
 #pragma mark - Public
@@ -70,17 +83,23 @@ NSString * const SFSImageManagerErrorDomain = @"SFSImageManagerErrorDomain";
 
 - (void)storeImage:(UIImage *)image usingIdentifier:(NSString *)identifier
 {
-    [self.backingFileManager storeData:UIImagePNGRepresentation(image) usingIdentifier:identifier];
+    dispatch_async(self.backgroundQueue, ^{
+        [self.backingFileManager storeData:UIImagePNGRepresentation(image) usingIdentifier:identifier];
+    });
 }
 
 - (void)storeImage:(UIImage *)image usingIdentifier:(NSString *)identifier inGroup:(NSString *)fileGroup
 {
-    [self.backingFileManager storeData:UIImagePNGRepresentation(image) usingIdentifier:identifier inGroup:fileGroup];
+    dispatch_async(self.backgroundQueue, ^{
+        [self.backingFileManager storeData:UIImagePNGRepresentation(image) usingIdentifier:identifier inGroup:fileGroup];
+    });
 }
 
 - (void)storeImage:(UIImage *)image usingIdentifier:(NSString *)identifier inGroup:(NSString *)fileGroup usingDiskEncryption:(BOOL)encrypt
 {
-    [self.backingFileManager storeData:UIImagePNGRepresentation(image) usingIdentifier:identifier inGroup:fileGroup usingDiskEncryption:encrypt];
+    dispatch_async(self.backgroundQueue, ^{
+        [self.backingFileManager storeData:UIImagePNGRepresentation(image) usingIdentifier:identifier inGroup:fileGroup usingDiskEncryption:encrypt];
+    });
 }
 
 #pragma mark - Private
