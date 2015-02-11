@@ -22,6 +22,7 @@
  */
 @property (nonatomic, strong) id<SFSRequestSerialization> requestSerializer;
 @property (nonatomic, strong) id<SFSResponseSerialization> responseSerializer;
+@property (nonatomic, copy) NSDictionary *defaultHeaders;
 
 // Initializers
 - (instancetype)initWithBaseURL:(NSURL *)baseURL;
@@ -37,6 +38,6 @@
 /**
  *  Use this method if you require more control over the URL request
  */
-- (id<SFSTask>)fetchDataUsingURLRequest:(NSURLRequest *)request completion:(SFSDataManagerCompletion)block;
+- (id<SFSTask>)fetchDataUsingURLRequest:(NSURLRequest *)urlRequest completion:(SFSDataManagerCompletion)block;
 
 @end

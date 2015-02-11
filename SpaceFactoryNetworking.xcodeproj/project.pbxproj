@@ -201,12 +201,6 @@
 				758329451A47DFF0003AC343 /* SFSDataManager.m */,
 				75786DB91A4DE457003FAA3D /* SFSDataFetchRequest.h */,
 				75786DBA1A4DE457003FAA3D /* SFSDataFetchRequest.m */,
-				75786DC41A4DED38003FAA3D /* SFSJSONSerializer.h */,
-				75786DC51A4DED38003FAA3D /* SFSJSONSerializer.m */,
-				752235741A590F6C003E41AD /* SFSFormDataSerializer.h */,
-				752235751A590F6C003E41AD /* SFSFormDataSerializer.m */,
-				75786DC71A4DEF33003FAA3D /* SFSXMLSerializer.h */,
-				75786DC81A4DEF33003FAA3D /* SFSXMLSerializer.m */,
 			);
 			name = Public;
 			sourceTree = "<group>";
@@ -225,6 +219,12 @@
 		75786DC11A4DEC1A003FAA3D /* Serialization */ = {
 			isa = PBXGroup;
 			children = (
+				75786DC41A4DED38003FAA3D /* SFSJSONSerializer.h */,
+				75786DC51A4DED38003FAA3D /* SFSJSONSerializer.m */,
+				752235741A590F6C003E41AD /* SFSFormDataSerializer.h */,
+				752235751A590F6C003E41AD /* SFSFormDataSerializer.m */,
+				75786DC71A4DEF33003FAA3D /* SFSXMLSerializer.h */,
+				75786DC81A4DEF33003FAA3D /* SFSXMLSerializer.m */,
 			);
 			name = Serialization;
 			sourceTree = "<group>";

@@ -13,6 +13,6 @@
 
 @interface SFSURLRequestFactory : NSObject
 
-- (NSURLRequest *)urlRequestFromFetchRequest:(SFSDataFetchRequest *)request baseURL:(NSURL *)baseURL usingSerializer:(id<SFSRequestSerialization>)serializer;
+- (NSURLRequest *)urlRequestFromFetchRequest:(SFSDataFetchRequest *)request baseURL:(NSURL *)baseURL headers:(NSDictionary *)headers usingSerializer:(id<SFSRequestSerialization>)serializer;
 
 @end

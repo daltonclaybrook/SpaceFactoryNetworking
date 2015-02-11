@@ -65,20 +65,20 @@ static NSString * const kContentTypeKey = @"Content-Type";
 
 - (id<SFSTask>)fetchDataUsingFetchRequest:(SFSDataFetchRequest *)request completion:(SFSDataManagerCompletion)block
 {
-    NSURLRequest *urlRequest = [self.urlRequestFactory urlRequestFromFetchRequest:request baseURL:self.baseURL usingSerializer:self.requestSerializer];
+    NSURLRequest *urlRequest = [self.urlRequestFactory urlRequestFromFetchRequest:request baseURL:self.baseURL headers:self.defaultHeaders usingSerializer:self.requestSerializer];
     
     return [self fetchDataUsingURLRequest:urlRequest completion:block];
 }
 
-- (id<SFSTask>)fetchDataUsingURLRequest:(NSURLRequest *)request completion:(SFSDataManagerCompletion)block
+- (id<SFSTask>)fetchDataUsingURLRequest:(NSURLRequest *)urlRequest completion:(SFSDataManagerCompletion)block
 {
-    if (!request || !block)
+    if (!urlRequest)
     {
         NSAssert(NO, @"one or more parameters were invalid");
         return nil;
     }
     
-    NSURLRequest *newReqest = [self requestByAddingContentTypeToRequestIfNecessary:request];
+    NSURLRequest *newReqest = [self requestByAddingContentTypeToRequestIfNecessary:urlRequest];
     NSURLSessionDataTask *task = [self.urlSession dataTaskWithRequest:newReqest];
     SFSDataFetchTask *fetchTask = [SFSDataFetchTask taskWithSessionTask:task completion:block];
     
@@ -100,7 +100,7 @@ static NSString * const kContentTypeKey = @"Content-Type";
         NSString *contentType = [self.requestSerializer contentType];
         if (contentType.length)
         {
-            [mutableRequest setValue:contentType forHTTPHeaderField:contentType];
+            [mutableRequest setValue:contentType forHTTPHeaderField:kContentTypeKey];
         }
     }
     

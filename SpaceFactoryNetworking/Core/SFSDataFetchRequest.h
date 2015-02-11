@@ -30,7 +30,9 @@ typedef NS_ENUM(NSInteger, SFSDataCachePolicy)
 
 @property (nonatomic, assign) SFSDataRequestMethod method;
 @property (nonatomic, copy) NSString *path;
-@property (nonatomic, strong) id object;
+
+@property (nonatomic, copy) NSDictionary *urlParameters;
+@property (nonatomic, strong) id bodyObject;
 
 /**
  *  keys/values to use as HTTP headers for this request only

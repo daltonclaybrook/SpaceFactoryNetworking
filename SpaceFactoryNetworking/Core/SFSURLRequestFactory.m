@@ -14,19 +14,20 @@
 
 #pragma mark - Public
 
-- (NSURLRequest *)urlRequestFromFetchRequest:(SFSDataFetchRequest *)request baseURL:(NSURL *)baseURL usingSerializer:(id<SFSRequestSerialization>)serializer
+- (NSURLRequest *)urlRequestFromFetchRequest:(SFSDataFetchRequest *)request baseURL:(NSURL *)baseURL headers:(NSDictionary *)headers usingSerializer:(id<SFSRequestSerialization>)serializer
 {
     NSString *fullPath = [baseURL.absoluteString stringByAppendingPathComponent:request.path];
-    NSURL *url = [NSURL URLWithString:fullPath];
+    NSURL *url = [self urlFromFullPath:fullPath urlParameters:request.urlParameters];
     NSMutableURLRequest *urlRequest = nil;
     
     if (url)
     {
         urlRequest = [[NSMutableURLRequest alloc] initWithURL:url];
         urlRequest.HTTPMethod = [self HTTPMethodFromDataRequestMethod:request.method];
-        urlRequest.HTTPBody = [self HTTPBodyDataFromObjectIfNecessary:request.object usingSerializer:serializer];
+        urlRequest.HTTPBody = [self HTTPBodyDataFromObjectIfNecessary:request.bodyObject usingSerializer:serializer];
         urlRequest.cachePolicy = [self cachePolicyForDataCachePolicy:request.cachePolicy];
         
+        [self applyHTTPHeaders:headers toRequest:urlRequest];
         [self applyHTTPHeaders:request.httpHeaderDictionary toRequest:urlRequest];
     }
     
@@ -34,6 +35,22 @@
 }
 
 #pragma mark - Private
+
+- (NSURL *)urlFromFullPath:(NSString *)fullPath urlParameters:(NSDictionary *)parameters
+{
+    NSMutableString *urlString = [fullPath mutableCopy];
+    if (parameters.count)
+    {
+        NSMutableArray *pairs = [NSMutableArray arrayWithCapacity:parameters.count];
+        for (NSString *key in parameters)
+        {
+            NSString *value = parameters[key];
+            [pairs addObject:[NSString stringWithFormat:@"%@=%@", key, value]];
+        }
+        [urlString appendFormat:@"?%@", [pairs componentsJoinedByString:@"&"]];
+    }
+    return [NSURL URLWithString:urlString];
+}
 
 - (NSString *)HTTPMethodFromDataRequestMethod:(SFSDataRequestMethod)method
 {
