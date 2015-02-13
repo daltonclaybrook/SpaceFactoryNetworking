@@ -137,7 +137,9 @@ didCompleteWithError:(NSError *)error
             }
         }
         
-        fetchTask.completionBlock(response, finalError);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            fetchTask.completionBlock(response, finalError);
+        });
     }
 }
 
