@@ -16,6 +16,7 @@
 {
     SFSDataFetchTask *fetchTask = [[self alloc] init];
     fetchTask.sessionTask = task;
+    fetchTask.responseData = [NSMutableData data];
     fetchTask.completionBlock = block;
     
     return fetchTask;

@@ -13,6 +13,7 @@
 @interface SFSDataFetchTask : NSObject <SFSTask>
 
 @property (nonatomic, strong) NSURLSessionTask *sessionTask;
+@property (nonatomic, strong) NSMutableData *responseData;
 @property (nonatomic, copy) SFSDataManagerCompletion completionBlock;
 
 + (instancetype)taskWithSessionTask:(NSURLSessionTask *)task completion:(SFSDataManagerCompletion)block;

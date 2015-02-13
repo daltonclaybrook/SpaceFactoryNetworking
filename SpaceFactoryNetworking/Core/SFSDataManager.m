@@ -114,29 +114,30 @@ static NSString * const kContentTypeKey = @"Content-Type";
     didReceiveData:(NSData *)data
 {
     SFSDataFetchTask *fetchTask = self.requestMappings[dataTask];
-    self.requestMappings[dataTask] = nil;
-    
-    if (fetchTask.completionBlock)
-    {
-        id response = data;
-        NSError *error = nil;
-        if (self.responseSerializer)
-        {
-            response = [self.responseSerializer objectFromData:data error:&error];
-        }
-        fetchTask.completionBlock(response, error);
-    }
+    [fetchTask.responseData appendData:data];
 }
 
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task
 didCompleteWithError:(NSError *)error
 {
     SFSDataFetchTask *fetchTask = self.requestMappings[task];
-    self.requestMappings[task] = nil;
+    [self.requestMappings removeObjectForKey:task];
     
     if (fetchTask.completionBlock)
     {
-        fetchTask.completionBlock(nil, error);
+        NSError *finalError = error;
+        id response = nil;
+        
+        if (!error)
+        {
+            response = fetchTask.responseData;
+            if (self.responseSerializer)
+            {
+                response = [self.responseSerializer objectFromData:response error:&finalError];
+            }
+        }
+        
+        fetchTask.completionBlock(response, finalError);
     }
 }
 
