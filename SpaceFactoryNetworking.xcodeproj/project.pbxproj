@@ -20,6 +20,7 @@
 		75786DC61A4DED38003FAA3D /* SFSJSONSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 75786DC51A4DED38003FAA3D /* SFSJSONSerializer.m */; };
 		75786DC91A4DEF33003FAA3D /* SFSXMLSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 75786DC81A4DEF33003FAA3D /* SFSXMLSerializer.m */; };
 		758329461A47DFF0003AC343 /* SFSDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 758329451A47DFF0003AC343 /* SFSDataManager.m */; };
+		758F67831A90FEA40081AD52 /* SFSDataErrorFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 758F67821A90FEA40081AD52 /* SFSDataErrorFactory.m */; };
 		75BF579E1A32FF3300C82F7D /* SFSActivityIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 75BF579D1A32FF3300C82F7D /* SFSActivityIndicatorView.m */; };
 		BE632CE71A322C3E00CE9121 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BE632CE61A322C3E00CE9121 /* main.m */; };
 		BE632CEA1A322C3E00CE9121 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BE632CE91A322C3E00CE9121 /* AppDelegate.m */; };
@@ -72,6 +73,8 @@
 		75786DC81A4DEF33003FAA3D /* SFSXMLSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFSXMLSerializer.m; sourceTree = "<group>"; };
 		758329441A47DFF0003AC343 /* SFSDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFSDataManager.h; sourceTree = "<group>"; };
 		758329451A47DFF0003AC343 /* SFSDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFSDataManager.m; sourceTree = "<group>"; };
+		758F67811A90FEA40081AD52 /* SFSDataErrorFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFSDataErrorFactory.h; sourceTree = "<group>"; };
+		758F67821A90FEA40081AD52 /* SFSDataErrorFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFSDataErrorFactory.m; sourceTree = "<group>"; };
 		75BF579C1A32FF3300C82F7D /* SFSActivityIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFSActivityIndicatorView.h; sourceTree = "<group>"; };
 		75BF579D1A32FF3300C82F7D /* SFSActivityIndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFSActivityIndicatorView.m; sourceTree = "<group>"; };
 		BE632CE11A322C3E00CE9121 /* SpaceFactoryNetworking.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpaceFactoryNetworking.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -212,6 +215,8 @@
 				75786DBE1A4DE856003FAA3D /* SFSDataFetchTask.m */,
 				753DF5891A578F5300961990 /* SFSURLRequestFactory.h */,
 				753DF58A1A578F5300961990 /* SFSURLRequestFactory.m */,
+				758F67811A90FEA40081AD52 /* SFSDataErrorFactory.h */,
+				758F67821A90FEA40081AD52 /* SFSDataErrorFactory.m */,
 			);
 			name = Private;
 			sourceTree = "<group>";
@@ -471,6 +476,7 @@
 				75BF579E1A32FF3300C82F7D /* SFSActivityIndicatorView.m in Sources */,
 				BE632D0D1A322C6B00CE9121 /* SFSFileManager.m in Sources */,
 				BE632D131A325A1400CE9121 /* SFSTaskMetadata.m in Sources */,
+				758F67831A90FEA40081AD52 /* SFSDataErrorFactory.m in Sources */,
 				75786DC61A4DED38003FAA3D /* SFSJSONSerializer.m in Sources */,
 				751F5EBF1A3554F60027409C /* SFSFileFetchRequest.m in Sources */,
 				BE632CE71A322C3E00CE9121 /* main.m in Sources */,

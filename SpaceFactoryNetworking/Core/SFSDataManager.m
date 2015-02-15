@@ -9,6 +9,7 @@
 #import "SFSDataManager.h"
 #import "SFSDataFetchTask.h"
 #import "SFSURLRequestFactory.h"
+#import "SFSDataErrorFactory.h"
 
 static NSString * const kContentTypeKey = @"Content-Type";
 
@@ -16,7 +17,9 @@ static NSString * const kContentTypeKey = @"Content-Type";
 
 @property (nonatomic, strong) NSURLSession *urlSession;
 @property (nonatomic, strong) NSMutableDictionary *requestMappings;
+
 @property (nonatomic, strong) SFSURLRequestFactory *urlRequestFactory;
+@property (nonatomic, strong) SFSDataErrorFactory *errorFactory;
 
 @end
 
@@ -52,6 +55,7 @@ static NSString * const kContentTypeKey = @"Content-Type";
     _requestMappings = [NSMutableDictionary dictionary];
     
     _urlRequestFactory = [[SFSURLRequestFactory alloc] init];
+    _errorFactory = [[SFSDataErrorFactory alloc] init];
 }
 
 #pragma mark - Public
@@ -120,15 +124,21 @@ static NSString * const kContentTypeKey = @"Content-Type";
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task
 didCompleteWithError:(NSError *)error
 {
+    NSError *finalError = error;
+    if (!finalError)
+    {
+        // Some error codes are not handled, such as 401.
+        finalError = [self.errorFactory errorForTask:task];
+    }
+    
     SFSDataFetchTask *fetchTask = self.requestMappings[task];
     [self.requestMappings removeObjectForKey:task];
     
     if (fetchTask.completionBlock)
     {
-        NSError *finalError = error;
         id response = nil;
         
-        if (!error)
+        if (!finalError)
         {
             response = fetchTask.responseData;
             if (self.responseSerializer)
