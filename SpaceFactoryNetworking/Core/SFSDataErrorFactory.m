@@ -7,8 +7,7 @@
 //
 
 #import "SFSDataErrorFactory.h"
-
-NSString * const SFSDataManagerErrorDomain = @"SFSDataManagerErrorDomain";
+#import "SFSNetworkingConstants.h"
 
 @implementation SFSDataErrorFactory
 

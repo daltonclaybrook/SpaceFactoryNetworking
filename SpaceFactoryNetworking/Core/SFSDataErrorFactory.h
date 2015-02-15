@@ -8,8 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-extern NSString * const SFSDataManagerErrorDomain;
-
 @interface SFSDataErrorFactory : NSObject
 
 - (NSError *)errorForTask:(NSURLSessionTask *)task;

@@ -10,3 +10,7 @@
 
 NSInteger const SFSFileManagerNoDiskSizeLimit = -1;
 NSString * const SFSFileManagerDefaultFileGroup = @"SFSFileManagerDefaultFileGroup";
+
+#pragma mark - Errors
+
+NSString * const SFSDataManagerErrorDomain = @"SFSDataManagerErrorDomain";
