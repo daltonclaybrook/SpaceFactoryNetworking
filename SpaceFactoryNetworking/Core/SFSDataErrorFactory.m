@@ -31,7 +31,7 @@
         }
         default:
         {
-            error = [self unknownError];
+            error = [self unknownErrorWithCode:response.statusCode];
             break;
         }
     }
@@ -45,14 +45,15 @@
     return [self errorWithCode:401 message:@"You are not authorized to make this request"];
 }
 
-- (NSError *)unknownError
+- (NSError *)unknownErrorWithCode:(NSInteger)statusCode
 {
-    return [self errorWithCode:-1 message:@"An unknown error occurred"];
+    NSString *message = [NSString stringWithFormat:@"An unknown error occurred (%li)", statusCode];
+    return [self errorWithCode:statusCode message:message];
 }
 
 - (NSError *)errorWithCode:(NSInteger)code message:(NSString *)message
 {
-    NSDictionary *userInfo = @{ NSUnderlyingErrorKey : message };
+    NSDictionary *userInfo = @{ NSLocalizedDescriptionKey : message };
     return [NSError errorWithDomain:SFSDataManagerErrorDomain code:code userInfo:userInfo];
 }
 
