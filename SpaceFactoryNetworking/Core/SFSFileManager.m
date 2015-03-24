@@ -450,6 +450,7 @@ static NSString * const kTaskMetadataFileName = @"taskMetadata";
 
 - (BOOL)saveManifest
 {
+#warning dispatch this to the same background thread the session works on.
     NSArray *copiedManifest = [self.fileManifest copy];
     return [NSKeyedArchiver archiveRootObject:copiedManifest toFile:[self manifestFilePath]];
 }
@@ -592,7 +593,12 @@ static NSString * const kTaskMetadataFileName = @"taskMetadata";
 
 - (BOOL)isProtectedDataAvailable
 {
+// If you use this class in a WatchKit extension, you must create a preprocessor macro called "WATCH_KIT"
+#ifndef WATCH_KIT
     return [[UIApplication sharedApplication] isProtectedDataAvailable];
+#else
+    return YES;
+#endif
 }
 
 - (float)taskPriorityForPriority:(SFSFileFetchRequestTaskPriority)priority

@@ -19,7 +19,7 @@
 @property (nonatomic, assign) BOOL usesEncryptionByDefault;
 
 /**
- *  default is SFSFileManagerNoDiskSizeLimit. e.g there is not limit on the disk cache for files.
+ *  default is SFSFileManagerNoDiskSizeLimit. i.e. there is no limit on the disk cache for files.
  */
 @property (nonatomic, assign) NSInteger diskSizeLimit;
 
