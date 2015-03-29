@@ -1,19 +1,17 @@
 //
-//  SFSDataErrorFactory.h
+//  SFSDataResponseFactory.h
 //  SpaceFactoryNetworking
 //
-//  Created by Dalton Claybrook on 2/15/15.
+//  Created by Dalton Claybrook on 3/29/15.
 //  Copyright (c) 2015 Space Factory Studios. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
-#import "SFSNetworkingConstants.h"
+#import "SFSDataResponse.h"
 
-@class SFSDataError;
+@interface SFSDataResponseFactory : NSObject
 
-@interface SFSDataErrorFactory : NSObject
-
-- (SFSDataError *)dataErrorForTask:(NSURLSessionTask *)task;
+- (SFSDataResponse *)dataResponseForTask:(NSURLSessionTask *)task object:(id)object error:(NSError *)error;
 - (void)registerUnderlyingError:(NSString *)error forHTTPDetailStatus:(SFSDataManagerHTTPDetailStatus)status;
 
 @end

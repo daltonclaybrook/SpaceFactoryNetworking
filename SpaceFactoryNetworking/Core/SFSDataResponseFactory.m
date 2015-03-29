@@ -1,21 +1,20 @@
 //
-//  SFSDataErrorFactory.m
+//  SFSDataResponseFactory.m
 //  SpaceFactoryNetworking
 //
-//  Created by Dalton Claybrook on 2/15/15.
+//  Created by Dalton Claybrook on 3/29/15.
 //  Copyright (c) 2015 Space Factory Studios. All rights reserved.
 //
 
-#import "SFSDataErrorFactory.h"
-#import "SFSDataError.h"
+#import "SFSDataResponseFactory.h"
 
-@interface SFSDataErrorFactory()
+@interface SFSDataResponseFactory()
 
 @property (nonatomic, strong) NSMutableDictionary *registeredErrors;
 
 @end
 
-@implementation SFSDataErrorFactory
+@implementation SFSDataResponseFactory
 
 #pragma mark - Initializers
 
@@ -31,7 +30,7 @@
 
 #pragma mark - Public
 
-- (SFSDataError *)dataErrorForTask:(NSURLSessionTask *)task;
+- (SFSDataResponse *)dataResponseForTask:(NSURLSessionTask *)task object:(id)object error:(NSError *)error
 {
     NSHTTPURLResponse *response = (id)task.response;
     
@@ -39,13 +38,12 @@
     SFSDataManagerHTTPDetailStatus detailStatus = [self httpDetailStatusFromCode:response.statusCode];
     NSString *errorString = self.registeredErrors[@(detailStatus)];
     
-    NSDictionary *userInfo = nil;
+    NSError *finalError = error;
     if (errorString.length)
     {
-        userInfo = @{NSLocalizedDescriptionKey : errorString};
+        finalError = [NSError errorWithDomain:SFSDataManagerErrorDomain code:detailStatus userInfo:@{NSLocalizedDescriptionKey : errorString}];
     }
-    
-    return [[SFSDataError alloc] initWithStatus:status detail:detailStatus userInfo:userInfo];
+    return [SFSDataResponse responseWithStatus:status detail:detailStatus responseObject:object error:error];
 }
 
 - (void)registerUnderlyingError:(NSString *)error forHTTPDetailStatus:(SFSDataManagerHTTPDetailStatus)status

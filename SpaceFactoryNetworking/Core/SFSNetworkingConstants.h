@@ -8,11 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
+@class SFSDataResponse;
+
 extern NSInteger const SFSFileManagerNoDiskSizeLimit;
 extern NSString * const SFSFileManagerDefaultFileGroup;
 
 typedef void(^SFSFileManagerCompletion)(NSURL *fileURL, NSError *error);
-typedef void(^SFSDataManagerCompletion)(id response, NSError *error);
+typedef void(^SFSDataManagerCompletion)(SFSDataResponse *response);
 
 typedef NS_ENUM(NSInteger, SFSDataManagerHTTPStatus)
 {

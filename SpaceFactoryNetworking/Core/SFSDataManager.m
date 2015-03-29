@@ -9,7 +9,7 @@
 #import "SFSDataManager.h"
 #import "SFSDataFetchTask.h"
 #import "SFSURLRequestFactory.h"
-#import "SFSDataErrorFactory.h"
+#import "SFSDataResponseFactory.h"
 
 static NSString * const kContentTypeKey = @"Content-Type";
 
@@ -19,7 +19,7 @@ static NSString * const kContentTypeKey = @"Content-Type";
 @property (nonatomic, strong) NSMutableDictionary *requestMappings;
 
 @property (nonatomic, strong) SFSURLRequestFactory *urlRequestFactory;
-@property (nonatomic, strong) SFSDataErrorFactory *errorFactory;
+@property (nonatomic, strong) SFSDataResponseFactory *dataResponseFactory;
 
 @end
 
@@ -55,7 +55,7 @@ static NSString * const kContentTypeKey = @"Content-Type";
     _requestMappings = [NSMutableDictionary dictionary];
     
     _urlRequestFactory = [[SFSURLRequestFactory alloc] init];
-    _errorFactory = [[SFSDataErrorFactory alloc] init];
+    _dataResponseFactory = [[SFSDataResponseFactory alloc] init];
 }
 
 #pragma mark - Public
@@ -125,29 +125,24 @@ static NSString * const kContentTypeKey = @"Content-Type";
 didCompleteWithError:(NSError *)error
 {
     NSError *finalError = error;
-    if (!finalError)
-    {
-        finalError = [self.errorFactory errorForTask:task];
-    }
-    
     SFSDataFetchTask *fetchTask = self.requestMappings[task];
     [self.requestMappings removeObjectForKey:task];
     
     if (fetchTask.completionBlock)
     {
-        id response = nil;
-        
+        id responseObject = nil;
         if (!finalError)
         {
-            response = fetchTask.responseData;
+            responseObject = fetchTask.responseData;
             if (self.responseSerializer)
             {
-                response = [self.responseSerializer objectFromData:response error:&finalError];
+                responseObject = [self.responseSerializer objectFromData:responseObject error:&finalError];
             }
         }
         
+        SFSDataResponse *response = [self.dataResponseFactory dataResponseForTask:task object:responseObject error:error];
         dispatch_async(dispatch_get_main_queue(), ^{
-            fetchTask.completionBlock(response, finalError);
+            fetchTask.completionBlock(response);
         });
     }
 }
