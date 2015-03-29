@@ -127,7 +127,6 @@ didCompleteWithError:(NSError *)error
     NSError *finalError = error;
     if (!finalError)
     {
-        // Some error codes are not handled, such as 401.
         finalError = [self.errorFactory errorForTask:task];
     }
     

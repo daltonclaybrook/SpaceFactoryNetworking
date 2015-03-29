@@ -7,54 +7,134 @@
 //
 
 #import "SFSDataErrorFactory.h"
-#import "SFSNetworkingConstants.h"
+#import "SFSDataError.h"
+
+@interface SFSDataErrorFactory()
+
+@property (nonatomic, strong) NSMutableDictionary *registeredErrors;
+
+@end
 
 @implementation SFSDataErrorFactory
 
+#pragma mark - Initializers
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self)
+    {
+        _registeredErrors = [NSMutableDictionary dictionary];
+    }
+    return self;
+}
+
 #pragma mark - Public
 
-- (NSError *)errorForTask:(NSURLSessionTask *)task
+- (SFSDataError *)dataErrorForTask:(NSURLSessionTask *)task;
 {
-    NSError *error = nil;
     NSHTTPURLResponse *response = (id)task.response;
-    switch (response.statusCode)
+    
+    SFSDataManagerHTTPStatus status = [self httpStatusFromCode:response.statusCode];
+    SFSDataManagerHTTPDetailStatus detailStatus = [self httpDetailStatusFromCode:response.statusCode];
+    NSString *errorString = self.registeredErrors[@(detailStatus)];
+    
+    NSDictionary *userInfo = nil;
+    if (errorString.length)
     {
-        case 200:
-        {
-            // no-op
-            break;
-        }
-        case 401:
-        {
-            error = [self error401];
-            break;
-        }
-        default:
-        {
-            error = [self unknownErrorWithCode:response.statusCode];
-            break;
-        }
+        userInfo = @{NSLocalizedDescriptionKey : errorString};
     }
-    return error;
+    
+    return [[SFSDataError alloc] initWithStatus:status detail:detailStatus userInfo:userInfo];
+}
+
+- (void)registerUnderlyingError:(NSString *)error forHTTPDetailStatus:(SFSDataManagerHTTPDetailStatus)status
+{
+    if (!error.length)
+    {
+        NSAssert(NO, @"Attempted to register a blank string: %@", NSStringFromSelector(_cmd));
+        return;
+    }
+    
+    self.registeredErrors[@(status)] = [error copy];
 }
 
 #pragma mark - Private
 
-- (NSError *)error401
+- (SFSDataManagerHTTPStatus)httpStatusFromCode:(NSInteger)statusCode
 {
-    return [self errorWithCode:401 message:@"You are not authorized to make this request"];
+    NSString *statusString = [NSString stringWithFormat:@"%li", (long)statusCode];
+    NSInteger trimmedCode = [[statusString substringToIndex:1] integerValue];
+    SFSDataManagerHTTPStatus status;
+    
+    switch (trimmedCode)
+    {
+        case 2:
+        {
+            status = SFSDataManagerHTTPStatusSuccess;
+            break;
+        }
+        case 3:
+        {
+            status = SFSDataManagerHTTPStatusRedirection;
+            break;
+        }
+        case 4:
+        {
+            status = SFSDataManagerHTTPStatusClientError;
+            break;
+        }
+        case 5:
+        {
+            status = SFSDataManagerHTTPStatusServerError;
+            break;
+        }
+        default:
+        {
+            status = SFSDataManagerHTTPStatusUnknown;
+            break;
+        }
+    }
+    return status;
 }
 
-- (NSError *)unknownErrorWithCode:(NSInteger)statusCode
+- (SFSDataManagerHTTPDetailStatus)httpDetailStatusFromCode:(NSInteger)statusCode
 {
-    NSString *message = [NSString stringWithFormat:@"An unknown error occurred (%li)", statusCode];
-    return [self errorWithCode:statusCode message:message];
-}
-
-- (NSError *)errorWithCode:(NSInteger)code message:(NSString *)message
-{
-    NSDictionary *userInfo = @{ NSLocalizedDescriptionKey : message };
-    return [NSError errorWithDomain:SFSDataManagerErrorDomain code:code userInfo:userInfo];
+    SFSDataManagerHTTPDetailStatus status;
+    switch (statusCode)
+    {
+        case SFSDataManagerHTTPDetailStatusOK:
+        case SFSDataManagerHTTPDetailStatusCreated:
+        case SFSDataManagerHTTPDetailStatusAccepted:
+        case SFSDataManagerHTTPDetailStatusNoContent:
+        case SFSDataManagerHTTPDetailStatusResetContent:
+        case SFSDataManagerHTTPDetailStatusPartialContent:
+        case SFSDataManagerHTTPDetailStatusMultipleChoices:
+        case SFSDataManagerHTTPDetailStatusMovedPermanently:
+        case SFSDataManagerHTTPDetailStatusNotModified:
+        case SFSDataManagerHTTPDetailStatusBadRequest:
+        case SFSDataManagerHTTPDetailStatusUnauthorized:
+        case SFSDataManagerHTTPDetailStatusForbidden:
+        case SFSDataManagerHTTPDetailStatusNotFound:
+        case SFSDataManagerHTTPDetailStatusNotAcceptable:
+        case SFSDataManagerHTTPDetailStatusGone:
+        case SFSDataManagerHTTPDetailStatusLengthRequired:
+        case SFSDataManagerHTTPDetailStatusInternalServerError:
+        case SFSDataManagerHTTPDetailStatusNotImplemented:
+        case SFSDataManagerHTTPDetailStatusBadGateway:
+        case SFSDataManagerHTTPDetailStatusServiceUnavailable:
+        case SFSDataManagerHTTPDetailStatusGatewayTimeout:
+        {
+            status = statusCode;
+            break;
+        }
+        default:
+        {
+            status = SFSDataManagerHTTPDetailStatusUnknown;
+            break;
+        }
+    }
+    return status;
 }
 
 @end

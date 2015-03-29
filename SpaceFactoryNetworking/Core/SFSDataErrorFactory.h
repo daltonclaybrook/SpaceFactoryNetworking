@@ -7,9 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "SFSNetworkingConstants.h"
+
+@class SFSDataError;
 
 @interface SFSDataErrorFactory : NSObject
 
-- (NSError *)errorForTask:(NSURLSessionTask *)task;
+- (SFSDataError *)dataErrorForTask:(NSURLSessionTask *)task;
+- (void)registerUnderlyingError:(NSString *)error forHTTPDetailStatus:(SFSDataManagerHTTPDetailStatus)status;
 
 @end

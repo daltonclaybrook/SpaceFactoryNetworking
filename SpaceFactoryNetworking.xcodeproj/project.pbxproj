@@ -15,6 +15,7 @@
 		7522357A1A592764003E41AD /* SFSFormFieldCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 752235791A592764003E41AD /* SFSFormFieldCollectionViewCell.m */; };
 		7522357E1A592EE3003E41AD /* SFSFormDataField.m in Sources */ = {isa = PBXBuildFile; fileRef = 7522357D1A592EE3003E41AD /* SFSFormDataField.m */; };
 		753DF58B1A578F5300961990 /* SFSURLRequestFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 753DF58A1A578F5300961990 /* SFSURLRequestFactory.m */; };
+		7564B6C11AC7CA7700CDA506 /* SFSDataError.m in Sources */ = {isa = PBXBuildFile; fileRef = 7564B6C01AC7CA7700CDA506 /* SFSDataError.m */; };
 		75786DBB1A4DE457003FAA3D /* SFSDataFetchRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 75786DBA1A4DE457003FAA3D /* SFSDataFetchRequest.m */; };
 		75786DBF1A4DE856003FAA3D /* SFSDataFetchTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 75786DBE1A4DE856003FAA3D /* SFSDataFetchTask.m */; };
 		75786DC61A4DED38003FAA3D /* SFSJSONSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 75786DC51A4DED38003FAA3D /* SFSJSONSerializer.m */; };
@@ -61,6 +62,8 @@
 		7522357D1A592EE3003E41AD /* SFSFormDataField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFSFormDataField.m; sourceTree = "<group>"; };
 		753DF5891A578F5300961990 /* SFSURLRequestFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFSURLRequestFactory.h; sourceTree = "<group>"; };
 		753DF58A1A578F5300961990 /* SFSURLRequestFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFSURLRequestFactory.m; sourceTree = "<group>"; };
+		7564B6BF1AC7CA7700CDA506 /* SFSDataError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFSDataError.h; sourceTree = "<group>"; };
+		7564B6C01AC7CA7700CDA506 /* SFSDataError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFSDataError.m; sourceTree = "<group>"; };
 		75786DB91A4DE457003FAA3D /* SFSDataFetchRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFSDataFetchRequest.h; sourceTree = "<group>"; };
 		75786DBA1A4DE457003FAA3D /* SFSDataFetchRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFSDataFetchRequest.m; sourceTree = "<group>"; };
 		75786DBD1A4DE856003FAA3D /* SFSDataFetchTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFSDataFetchTask.h; sourceTree = "<group>"; };
@@ -131,6 +134,15 @@
 			children = (
 				7522357C1A592EE3003E41AD /* SFSFormDataField.h */,
 				7522357D1A592EE3003E41AD /* SFSFormDataField.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		7564B6BE1AC7CA5D00CDA506 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				7564B6BF1AC7CA7700CDA506 /* SFSDataError.h */,
+				7564B6C01AC7CA7700CDA506 /* SFSDataError.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -351,6 +363,7 @@
 		BE632D0A1A322C4C00CE9121 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				7564B6BE1AC7CA5D00CDA506 /* Model */,
 				75771F0D1A46B72E001D2402 /* Protocols */,
 				75771F0F1A46B74B001D2402 /* Constants */,
 				75771F111A46B7B6001D2402 /* Data Manager */,
@@ -467,6 +480,7 @@
 				BE632D101A3248F100CE9121 /* SFSFileDescriptor.m in Sources */,
 				752235731A590BB1003E41AD /* RESTViewController.m in Sources */,
 				BE632CEA1A322C3E00CE9121 /* AppDelegate.m in Sources */,
+				7564B6C11AC7CA7700CDA506 /* SFSDataError.m in Sources */,
 				7522357E1A592EE3003E41AD /* SFSFormDataField.m in Sources */,
 				752235761A590F6C003E41AD /* SFSFormDataSerializer.m in Sources */,
 				75786DC91A4DEF33003FAA3D /* SFSXMLSerializer.m in Sources */,
